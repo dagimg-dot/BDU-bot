@@ -1,2 +1,2 @@
 # BDU-bot
- Telegram bot that brings BDU website to telegram.
+ Telegram bot that brings BDU Student Information Management System website to telegram.
