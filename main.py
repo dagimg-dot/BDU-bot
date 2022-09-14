@@ -4,7 +4,7 @@ import time
 import pandas as pd
 import telebot
 
-API_file = open('API.txt', 'r')
+API_file = open('Token.txt', 'r')
 API_TOKEN = API_file.read()
 API_file.close()
 
