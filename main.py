@@ -9,76 +9,55 @@ API_TOKEN = API_file.read()
 API_file.close()
 
 bot = telebot.TeleBot(API_TOKEN)
+print("Bot started ...")
+url='https://studentinfo.bdu.edu.et/login.aspx?ReturnUrl=%2f'
+page_to_scrape=webdriver.Edge()
+page_to_scrape.minimize_window()
+page_to_scrape.get(url)
 
 @bot.message_handler(commands=['help', 'start'])
 def welcome(pm):
-    sent_msg = bot.send_message(pm.chat.id, "What is your username?")
+    print(pm.text);
+    page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
+    sent_msg = bot.send_message(pm.chat.id, "Enter your username")
     bot.register_next_step_handler(sent_msg, username_handler) #Next message will call the name_handler function
     
 def username_handler(pm):
     username = pm.text
-    # scraperBDU.credentials(username)
-    sent_msg = bot.send_message(pm.chat.id, "What is your password?")
+    sent_msg = bot.send_message(pm.chat.id, "Enter your password?")
     bot.register_next_step_handler(sent_msg, password_handler, username) #Next message will call the age_handler function
 
 def password_handler(pm, username):
     password = pm.text
-    # scraperBDU.credentials(password)
-    bot.send_message(pm.chat.id, f"Username : {username}\nPassword: {password}")
-    #bot.register_next_step_handler(sent_msg,scrape_handler,username,password)
-    scrape_handler(username,password)
+    sent_msg=bot.send_message(pm.chat.id, f"Username : {username}\nPassword: {password}")
+    # bot.register_next_step_handler(sent_msg,scrape_handler,username,password)
+    scrape_handler(pm,username,password)
 
-# def send_credentials(username, password):
-#     usrname.send_keys(username)
-#     passwd.send_keys(password)
-
-# async def send_credentials(username, password):
-#     # username.send_keys(usr)
-#     # password.send_keys(passwd)
-#     usr=username
-#     passwd=password
-#     return usr,passwd
-
-def scrape_handler(usr, passd):
-    url='https://studentinfo.bdu.edu.et/login.aspx?ReturnUrl=%2f'
-    page_to_scrape=webdriver.Edge()
-    page_to_scrape.get(url)
-    page_to_scrape.minimize_window()
-
+def scrape_handler(pm,usr, passd):
     usrname=page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername")
     passwd=page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtPassword")
-
-
-
-
-    # usr,passwd=send_credentials()
     usrname.send_keys(usr)
     passwd.send_keys(passd)
-
-    # def credentials(cred):
-    #     if "BDU" in cred:
-    #         username.send_keys(cred)
-    #     else:
-    #         password.send_keys(cred)
-
     page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_cmdLogin").click()
     time.sleep(2)
 
     check_login=page_to_scrape.find_element(By.XPATH,"//div/table/tbody/tr/td[2]/span").text
-    while(check_login!="People Online:"):
-        page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
-        username=page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername")
-        password=page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtPassword")
+    if(check_login!="People Online:"):
+
+        # page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
+        # username=page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername")
+        # password=page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtPassword")
         
-        bot.send_message("Login failed. Please try again...")
+        sent_msg=bot.send_message(pm.chat.id,"Login failed! Your Username or Password is incorrect, Please try again...")
+        bot.register_next_step_handler(sent_msg,welcome,pm)
         # print("Login failed. Please try again...")
-        usrname=input("Enter your username please: ")
-        username.send_keys(usrname)
-        passwd=input("Ener your password please: ")
-        password.send_keys(passwd)
+        # usrname=input("Enter your username please: ")
+        # username.send_keys(usrname)
+        # passwd=input("Ener your password please: ")
+        # password.send_keys(passwd)
         
-        page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_cmdLogin").click()
-        time.sleep(2)
+        # page_to_scrape.find_element(By.ID, "dnn_ctr_Login_Login_DNN_cmdLogin").click()
+        # time.sleep(2)
         
         check_login=page_to_scrape.find_element(By.XPATH,"//div/table/tbody/tr/td[2]/span").text
 
