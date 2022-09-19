@@ -6,6 +6,7 @@ import telebot
 from telebot import types
 
 
+
 API_file = open('Token.txt', 'r')
 API_TOKEN = API_file.read()
 API_file.close()
@@ -30,11 +31,11 @@ def choice_handler(pm):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton('Login')
     btn2 = types.KeyboardButton('Predict GPA')
-    # if(callback_inline(pm,call)==False):
+    # if(user_answer(pm)==False):
     #     btn3 = types.KeyboardButton('Login as')
     #     markup.add(btn1, btn2, btn3)
     # else:
-    markup.add(btn1, btn2)
+    markup.add(btn1, btn2) 
         
     msg = bot.send_message(
         pm.chat.id, "Choose what you want to do:", reply_markup=markup)
@@ -129,15 +130,17 @@ def still_loggedin_checker(pm):
 
 @bot.callback_query_handler(func=lambda call: True)
 def user_answer(call):
+    pm=call.message
     choice=False
     if call.data == "y":
-        page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
         page_to_scrape.close()
-        choice_handler(call)
+        msg="You are logged out !!"
+        bot.send_message(pm.chat.id,msg)
+        bot.register_next_step_handler(msg,choice_handler)
         choice=True
-    # elif call.data == "n":
-    #     choice_handler(pm)
-    # return choice
+    elif call.data == "n":
+        choice_handler(pm)
+    return choice
         
 
 
