@@ -65,8 +65,6 @@ def all_messages(message):
     if message.text == menu[0]:
         buttons_clicked.append(message.text)
         login(message)
-        # bot.send_message(message.from_user.id, "Enter your Credentials ...",
-        #                  reply_markup=buttons("s_login"))
     elif message.text == menu[1]:
         markup = telebot.types.ReplyKeyboardRemove()
         bot.send_message(message.from_user.id, "GPA Prediction Tool",
@@ -80,8 +78,9 @@ def all_messages(message):
         bot.send_message(message.from_user.id, success_login[1],
                          reply_markup=buttons("my_status"))
     elif message.text == success_login[2]:
-        bot.send_message(message.from_user.id, success_login[2],
+        bot.send_message(message.from_user.id, "Pulling Grades ... ",
                          reply_markup=buttons("s_login"))
+        My_Grades(message)
     elif message.text == success_login[3]:
         bot.send_message(message.from_user.id, success_login[3],
                          reply_markup=buttons("s_login"))
@@ -107,14 +106,11 @@ def all_messages(message):
         back_button_handler(message)
     elif message.text == "Back to Menu":
         still_loggedin_checker(message)
-        # bot.send_message(message.from_user.id, "Main Menu",
-        #                  reply_markup=buttons("Menu"))
     else:
         bot.send_message(message.from_user.id, "I didn't get what you say ...")
 
 
 def back_button_handler(message):
-    # still_loggedin_checker(message)
     length=len(buttons_clicked)
     if length !=1:
         for i in buttons_clicked[:length-1]:
@@ -125,6 +121,7 @@ def back_button_handler(message):
         bot.send_message(message.chat.id,"Back",reply_markup=buttons("Menu"))
 
 def login(message):
+    page_to_scrape.get(url)
     page_to_scrape. find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
     sent_msg = bot.send_message(message.chat.id, "Enter your username")
     bot.register_next_step_handler(sent_msg, username_handler)
@@ -160,7 +157,6 @@ def login_validator(message, usr, passd):
 
 
 def wrong_cred_handler(message, c_login):
-    time.sleep(2)
     if (c_login != "People Online:"):
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
         bot.send_message(message.chat.id, msg)
@@ -183,7 +179,7 @@ def still_loggedin_checker(message):
 def user_answer(call):
     message=call.message
     if call.data == "y":
-        page_to_scrape.get(url)
+        page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
         msg="You are logged out !!"
         bot.send_message(message.chat.id,msg,reply_markup=buttons("Menu"))
     elif call.data == "n":
@@ -198,29 +194,28 @@ def My_Status(message):
     bot.send_message(message.chat.id,msg)
 
 def My_Grades(message):
-    # name = page_to_scrape.find_element(
-    #     By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
-    # bot.send_message(message.chat.id, "Logged in as: "+name+"\n")
-    # page_to_scrape.find_element(
-    #     By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
+    page_to_scrape.find_element(
+        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
 
-    # courseTitle = page_to_scrape.find_elements(
-    #     By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")
-    # grade = page_to_scrape.find_elements(
-    #     By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
+    courseTitle = page_to_scrape.find_elements(
+        By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")
+    grade = page_to_scrape.find_elements(
+        By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
 
-    # list_result = []
+    list_result = []
 
-    # for i in range(len(courseTitle)):
-    #     temp_data = {'Course Title': courseTitle[i].text,
-    #                  'Grade': grade[i].text}
-    #     list_result.append(temp_data)
+    for i in range(len(courseTitle)):
+        temp_data = {'Course Title': courseTitle[i].text,
+                     'Grade': grade[i].text}
+        list_result.append(temp_data)
 
-    # df_data = pd.DataFrame(list_result)
-    # bot.send_message(message.chat.id, list_result)
+    # for i in list_result:
+    #     print(i)
+    df_data = pd.DataFrame(list_result)
+    bot.send_message(message.chat.id, df_data)
     # print(df_data)
-    msg="My Grades option"
-    bot.send_message(message.chat.id,msg)
+    # msg="My Grades option"
+    # bot.send_message(message.chat.id,msg)
 
 def My_Dormitory(message):
     msg="My Dromitory option"
