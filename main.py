@@ -18,57 +18,132 @@ page_to_scrape = webdriver.Edge()
 page_to_scrape.minimize_window()
 page_to_scrape.get(url)
 
+menu = ["Login", "Predict GPA"]
+success_login = ["My Courses", "My Status", "My Grades", "My Dormitory"]
+MyC = ["All Courses", "Courses given on a specific year",
+       "Courses given on a specific semester"]
+MyS = ["Cumulative GPA - CGPA", "Semester GPA - SGPA", "Semester Grades"]
 
-@bot.message_handler(commands=['start'])
-def welcome(pm):
-    msg = bot.send_message(pm.chat.id, "Hello "+str(pm.chat.username) +
-                           " This is BDU_SIMS Bot. It brings the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo see what it's capable of refer /help")
-    bot.register_next_step_handler(msg, choice_handler)
+buttons_clicked = []
 
-
-@bot.message_handler(commands=['actions'])
-def choice_handler(pm):
+def buttons(type="Menu"):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton('Login')
-    btn2 = types.KeyboardButton('Predict GPA')
-    # if(user_answer(pm)==False):
-    #     btn3 = types.KeyboardButton('Login as')
-    #     markup.add(btn1, btn2, btn3)
-    # else:
-    markup.add(btn1, btn2) 
-        
-    msg = bot.send_message(
-        pm.chat.id, "Choose what you want to do:", reply_markup=markup)
-    bot.register_next_step_handler(msg, markup_handler)
+    if type == "Menu":
+        row = [types.KeyboardButton(x) for x in menu]
+        markup.add(*row)
+    elif type == "s_login":
+        row = [types.KeyboardButton(x) for x in success_login]
+        markup.add(*row)
+        markup.add(types.KeyboardButton("Back to Menu"))
+    elif type == "my_courses":
+        markup.row_width = 1
+        row = [types.KeyboardButton(x) for x in MyC]
+        markup.add(*row)
+        markup.add(types.KeyboardButton("Back"),
+                   types.KeyboardButton("Back to Menu"))
+    elif type == "my_status":
+        markup.row_width = 1
+        row = [types.KeyboardButton(x) for x in MyS]
+        markup.add(*row)
+        markup.add(types.KeyboardButton("Back"),
+                   types.KeyboardButton("Back to Menu"))
+    return markup
+
+@bot.message_handler(commands=["start"])
+def start_message(message):
+    bot.send_message(
+        message.chat.id, f"Hello {message.from_user.first_name}. This is BDU_SIMS Bot. It brings the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help")
 
 
-def markup_handler(pm):
-    if (pm.text == 'Login'):
-        login(pm)
-    elif(pm.text == 'Predict GPA'):
-        msg="You Choose Predict GPA"
-        bot.send_message(pm.chat.id,msg)
+@bot.message_handler(commands=["menu"])
+def menu_handler(message):
+    msg = "Main Menu"
+    bot.send_message(message.chat.id, msg, reply_markup=buttons())
 
-def login(pm):
+@bot.message_handler(func=lambda message: True)
+def all_messages(message):
+    if message.text == menu[0]:
+        buttons_clicked.append(message.text)
+        login(message)
+        # bot.send_message(message.from_user.id, "Enter your Credentials ...",
+        #                  reply_markup=buttons("s_login"))
+    elif message.text == menu[1]:
+        markup = telebot.types.ReplyKeyboardRemove()
+        bot.send_message(message.from_user.id, "GPA Prediction Tool",
+                         reply_markup=markup)
+    elif message.text == success_login[0]:
+        buttons_clicked.append(message.text)
+        bot.send_message(message.from_user.id, success_login[0],
+                         reply_markup=buttons("my_courses"))
+    elif message.text == success_login[1]:
+        buttons_clicked.append(message.text)
+        bot.send_message(message.from_user.id, success_login[1],
+                         reply_markup=buttons("my_status"))
+    elif message.text == success_login[2]:
+        bot.send_message(message.from_user.id, success_login[2],
+                         reply_markup=buttons("s_login"))
+    elif message.text == success_login[3]:
+        bot.send_message(message.from_user.id, success_login[3],
+                         reply_markup=buttons("s_login"))
+    elif message.text == MyC[0]:
+        bot.send_message(message.from_user.id, MyC[0],
+                         reply_markup=buttons("my_courses"))
+    elif message.text == MyC[1]:
+        bot.send_message(message.from_user.id, MyC[1],
+                         reply_markup=buttons("my_courses"))
+    elif message.text == MyC[2]:
+        bot.send_message(message.from_user.id, MyC[2],
+                         reply_markup=buttons("my_courses"))
+    elif message.text == MyS[0]:
+        bot.send_message(message.from_user.id, MyS[0],
+                         reply_markup=buttons("my_status"))
+    elif message.text == MyS[1]:
+        bot.send_message(message.from_user.id, MyS[1],
+                         reply_markup=buttons("my_status"))
+    elif message.text == MyS[2]:
+        bot.send_message(message.from_user.id, MyS[2],
+                         reply_markup=buttons("my_status"))
+    elif message.text == "Back":
+        back_button_handler(message)
+    elif message.text == "Back to Menu":
+        still_loggedin_checker(message)
+        # bot.send_message(message.from_user.id, "Main Menu",
+        #                  reply_markup=buttons("Menu"))
+    else:
+        bot.send_message(message.from_user.id, "I didn't get what you say ...")
+
+
+def back_button_handler(message):
+    # still_loggedin_checker(message)
+    length=len(buttons_clicked)
+    if length !=1:
+        for i in buttons_clicked[:length-1]:
+            buttons_clicked.remove(i)
+    if buttons_clicked[0] == "My Courses" or buttons_clicked[0] == "My Status":
+        bot.send_message(message.from_user.id,"Back",reply_markup=buttons("s_login"))
+    elif buttons_clicked[0] == "Login":
+        bot.send_message(message.chat.id,"Back",reply_markup=buttons("Menu"))
+
+def login(message):
     page_to_scrape. find_element(By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
-    sent_msg = bot.send_message(pm.chat.id, "Enter your username")
+    sent_msg = bot.send_message(message.chat.id, "Enter your username")
     bot.register_next_step_handler(sent_msg, username_handler)
 
 
-def username_handler(pm):
-    username = pm.text
-    sent_msg = bot.send_message(pm.chat.id, "Enter your password")
+def username_handler(message):
+    username = message.text
+    sent_msg = bot.send_message(message.chat.id, "Enter your password")
     bot.register_next_step_handler(sent_msg, password_handler, username)
 
 
-def password_handler(pm, username):
-    password = pm.text
+def password_handler(message, username):
+    password = message.text
     bot.send_message(
-        pm.chat.id, f"Username : {username}\nPassword: {password}")
-    login_validator(pm, username, password)
+        message.chat.id, f"Username : {username}\nPassword: {password}")
+    login_validator(message, username, password)
 
 
-def login_validator(pm, usr, passd):
+def login_validator(message, usr, passd):
     usrname = page_to_scrape.find_element(
         By.ID, "dnn_ctr_Login_Login_DNN_txtUsername")
     passwd = page_to_scrape.find_element(
@@ -81,102 +156,74 @@ def login_validator(pm, usr, passd):
 
     check_login = page_to_scrape.find_element(
         By.XPATH, "//div/table/tbody/tr/td[2]/span").text
-    wrong_cred_handler(pm, check_login)
+    wrong_cred_handler(message, check_login)
 
 
-def wrong_cred_handler(pm, c_login):
+def wrong_cred_handler(message, c_login):
+    time.sleep(2)
     if (c_login != "People Online:"):
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
-        bot.send_message(pm.chat.id, msg)
-        login(pm)
+        bot.send_message(message.chat.id, msg)
+        login(message)
     else:
-        time.sleep(2)
         name=page_to_scrape.find_element(By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
-        msg="Logged in as: "+name+"\n"
-        bot.send_message(pm.chat.id,msg)
-        choice_handler_login(pm)
+        msg="Login Successful !!\nLogged in as: "+name
+        bot.send_message(message.from_user.id, msg,
+                         reply_markup=buttons("s_login"))
 
 
-def choice_handler_login(pm):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton('My Courses')
-    btn2 = types.KeyboardButton('My Status')
-    btn3 = types.KeyboardButton('My Grades')
-    btn4 = types.KeyboardButton('My Dormitory')
-    btn5 = types.KeyboardButton('🔙Back')
-    markup.add(btn1, btn2, btn3, btn4, btn5)
-    msg = bot.send_message(pm.chat.id, "Choose what you want to do:", reply_markup=markup)
-    bot.register_next_step_handler(msg, markup_handler_login)
-
-
-def markup_handler_login(pm):
-    if (pm.text == 'My Courses'):
-       My_Courses(pm)
-    elif (pm.text == 'My Status'):
-        My_Status(pm)
-    elif (pm.text == 'My Grades'):
-        My_Grades(pm)
-    elif (pm.text == 'My Dormitory'):
-        My_Dormitory(pm)
-    elif (pm.text == '🔙Back'):
-        still_loggedin_checker(pm)
-
-def still_loggedin_checker(pm):
+def still_loggedin_checker(message):
     markup=types.InlineKeyboardMarkup()
     button=types.InlineKeyboardButton('Yes',callback_data="y")
     button2=types.InlineKeyboardButton('No',callback_data="n")
     markup.add(button,button2)
-    bot.send_message(pm.chat.id,'You are still Logged in. Do you want to log out ?',reply_markup=markup)
+    bot.send_message(message.chat.id,'You are still Logged in. Do you want to log out ?',reply_markup=markup)
 
 @bot.callback_query_handler(func=lambda call: True)
 def user_answer(call):
-    pm=call.message
-    choice=False
+    message=call.message
     if call.data == "y":
-        page_to_scrape.close()
+        page_to_scrape.get(url)
         msg="You are logged out !!"
-        bot.send_message(pm.chat.id,msg)
-        bot.register_next_step_handler(msg,choice_handler)
-        choice=True
+        bot.send_message(message.chat.id,msg,reply_markup=buttons("Menu"))
     elif call.data == "n":
-        choice_handler(pm)
-    return choice
-        
+        bot.send_message(message.chat.id,"Logging out Cancelled")
 
+def My_Courses(message):
+    msg="My Courses option"
+    bot.send_message(message.chat.id,msg)
 
-def My_Courses(pm):
-    msg="My Courses"
-    bot.send_message(pm.chat.id,msg)
+def My_Status(message):
+    msg="My Status option"
+    bot.send_message(message.chat.id,msg)
 
-def My_Status(pm):
-    msg="My Status"
-    bot.send_message(pm.chat.id,msg)
+def My_Grades(message):
+    # name = page_to_scrape.find_element(
+    #     By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
+    # bot.send_message(message.chat.id, "Logged in as: "+name+"\n")
+    # page_to_scrape.find_element(
+    #     By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
 
-def My_Grades(pm):
-    name = page_to_scrape.find_element(
-        By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
-    bot.send_message(pm.chat.id, "Logged in as: "+name+"\n")
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
+    # courseTitle = page_to_scrape.find_elements(
+    #     By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")
+    # grade = page_to_scrape.find_elements(
+    #     By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
 
-    courseTitle = page_to_scrape.find_elements(
-        By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")
-    grade = page_to_scrape.find_elements(
-        By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
+    # list_result = []
 
-    list_result = []
+    # for i in range(len(courseTitle)):
+    #     temp_data = {'Course Title': courseTitle[i].text,
+    #                  'Grade': grade[i].text}
+    #     list_result.append(temp_data)
 
-    for i in range(len(courseTitle)):
-        temp_data = {'Course Title': courseTitle[i].text,
-                     'Grade': grade[i].text}
-        list_result.append(temp_data)
+    # df_data = pd.DataFrame(list_result)
+    # bot.send_message(message.chat.id, list_result)
+    # print(df_data)
+    msg="My Grades option"
+    bot.send_message(message.chat.id,msg)
 
-    df_data = pd.DataFrame(list_result)
-    bot.send_message(pm.chat.id, list_result)
-    print(df_data)
-
-def My_Dormitory(pm):
-    msg="My Dromitory"
-    bot.send_message(pm.chat.id,msg)
+def My_Dormitory(message):
+    msg="My Dromitory option"
+    bot.send_message(message.chat.id,msg)
 
 bot.infinity_polling()
