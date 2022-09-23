@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-import pandas as pd
 import telebot
 from telebot import types
 
@@ -52,7 +51,7 @@ def buttons(type="Menu"):
 @bot.message_handler(commands=["start"])
 def start_message(message):
     bot.send_message(
-        message.chat.id, f"Hello {message.from_user.first_name}. This is BDU_SIMS Bot. It brings the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help")
+        message.chat.id, f"Hello {message.from_user.first_name}. This is BDU_SIMS Bot. It brings you the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help")
 
 
 @bot.message_handler(commands=["menu"])
@@ -85,14 +84,19 @@ def all_messages(message):
         bot.send_message(message.from_user.id, success_login[3],
                          reply_markup=buttons("s_login"))
     elif message.text == MyC[0]:
-        bot.send_message(message.from_user.id, MyC[0],
+        bot.send_message(message.from_user.id, "Pulling all courses . . .",
                          reply_markup=buttons("my_courses"))
+        All_Courses(message)
     elif message.text == MyC[1]:
-        bot.send_message(message.from_user.id, MyC[1],
+        bot.send_message(message.from_user.id, "Enter year",
                          reply_markup=buttons("my_courses"))
+        choice='y'
+        year_handler(message,choice)
     elif message.text == MyC[2]:
         bot.send_message(message.from_user.id, MyC[2],
                          reply_markup=buttons("my_courses"))
+        choice='s'
+        year_handler(message,choice)                
     elif message.text == MyS[0]:
         bot.send_message(message.from_user.id, MyS[0],
                          reply_markup=buttons("my_status"))
@@ -131,12 +135,12 @@ def username_handler(message):
     username = message.text
     sent_msg = bot.send_message(message.chat.id, "Enter your password")
     bot.register_next_step_handler(sent_msg, password_handler, username)
-
+    
 
 def password_handler(message, username):
     password = message.text
     bot.send_message(
-        message.chat.id, f"Username : {username}\nPassword: {password}")
+        message.chat.id, "Authenticating . . .")
     login_validator(message, username, password)
 
 
@@ -149,7 +153,7 @@ def login_validator(message, usr, passd):
     passwd.send_keys(passd)
     page_to_scrape.find_element(
         By.ID, "dnn_ctr_Login_Login_DNN_cmdLogin").click()
-    time.sleep(2)
+    # time.sleep(2)
 
     check_login = page_to_scrape.find_element(
         By.XPATH, "//div/table/tbody/tr/td[2]/span").text
@@ -185,10 +189,60 @@ def user_answer(call):
     elif call.data == "n":
         bot.send_message(message.chat.id,"Logging out Cancelled")
 
-def My_Courses(message):
-    msg="My Courses option"
-    bot.send_message(message.chat.id,msg)
+def All_Courses(message):
+    page_to_scrape.find_element(By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
+    courseTitle = page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
+    credit_hour = page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
 
+    course_list = {}
+    for i in range(len(courseTitle)):
+        temp_data = {courseTitle[i].text:credit_hour[i].text}
+        course_list.update(temp_data)
+
+    full_str="\n".join("{}\t\t{}".format(v, k) for k, v in course_list.items())
+    size="There are " +str(len(courseTitle)-1) + " courses in Software Engineering Department"
+    bot.send_message(message.chat.id,full_str)
+    bot.send_message(message.chat.id,size)
+    # elif choice=='y':
+    #     course_list = {}
+    #     print(message.text)
+    #     for i in range(len(courseTitle)):
+    #         if year[i].text=='1':
+    #             temp_data = {courseTitle[i].text:credit_hour[i].text}
+    #             course_list.update(temp_data)
+        
+    #     full_str="\n".join("{}\t\t{}".format(v, k) for k, v in course_list.items())
+    #     bot.send_message(message.chat.id,full_str)
+    
+def year_handler(message,choice):
+    page_to_scrape.find_element(By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
+    year = message.text
+    if choice=='y':
+        semester=0
+        validator(message,year,semester)
+    elif choice=='s':
+        sent_msg = bot.send_message(message.chat.id, "Enter Semester")
+        bot.register_next_step_handler(sent_msg, semester_handler, year)
+    
+
+def semester_handler(message, year):
+    semester = message.text
+    bot.send_message(
+        message.chat.id, "Checking availability . . .")
+    validator(message, year, semester)
+
+
+def validator(message,year,semester):
+    year1=page_to_scrape.find_elements(By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
+    years=[]
+    for i in range(1,len(year1)):
+        years.append(year1[i].text)
+        # print(year1[i].text)
+    year_max=max(years)
+    print(year_max)
+    print(year)
 def My_Status(message):
     msg="My Status option"
     bot.send_message(message.chat.id,msg)
@@ -202,20 +256,13 @@ def My_Grades(message):
     grade = page_to_scrape.find_elements(
         By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
 
-    list_result = []
-
+    grade_list = {}
     for i in range(len(courseTitle)):
-        temp_data = {'Course Title': courseTitle[i].text,
-                     'Grade': grade[i].text}
-        list_result.append(temp_data)
+        temp_data = {courseTitle[i].text:grade[i].text}
+        grade_list.update(temp_data)
 
-    # for i in list_result:
-    #     print(i)
-    df_data = pd.DataFrame(list_result)
-    bot.send_message(message.chat.id, df_data)
-    # print(df_data)
-    # msg="My Grades option"
-    # bot.send_message(message.chat.id,msg)
+    full_str="\n".join("{}\t\t{}".format(v, k) for k, v in grade_list.items())
+    bot.send_message(message.chat.id,full_str)
 
 def My_Dormitory(message):
     msg="My Dromitory option"
