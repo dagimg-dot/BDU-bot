@@ -1,5 +1,3 @@
-from secrets import choice
-from ssl import Options
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -24,7 +22,7 @@ url = 'https://studentinfo.bdu.edu.et/login.aspx?ReturnUrl=%2f'
 # page_to_scrape = webdriver.Edge(executable_path="E:\Programming\Git\BDU-bot\msedgedriver.exe",options=edge_options)
 page_to_scrape = webdriver.Edge()
 page_to_scrape.minimize_window()
-# page_to_scrape.get(url)
+page_to_scrape.get(url)
 
 menu = ["Login", "Predict GPA"]
 success_login = ["My Courses", "My Status", "My Grades", "My Dormitory"]
@@ -33,6 +31,17 @@ MyC = ["All Courses", "Courses given on a specific year",
 MyS = ["Cumulative GPA - CGPA", "Semester GPA - SGPA", "Semester Grades"]
 
 buttons_clicked = []
+master_check=False
+
+cardinal_ordinal = {
+    1: 'first',
+    2: 'second',
+    3: 'third',
+    4: 'forth',
+    5: 'fifth',
+    6: 'sixth',
+    7: 'seventh',
+}
 
 
 def buttons(type="Menu"):
@@ -62,7 +71,7 @@ def buttons(type="Menu"):
 @bot.message_handler(commands=["start"])
 def start_message(message):
     bot.send_message(
-        message.chat.id, f"Hello {message.from_user.first_name}. This is BDU_SIMS Bot. It brings you the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help (recommended)")
+        message.chat.id, f"Hello {message.from_user.first_name}. This is BDU-SIMS Bot. It brings you the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help (recommended)")
 
 
 @bot.message_handler(commands=["help"])
@@ -76,62 +85,66 @@ def menu_handler(message):
     msg = "Main Menu"
     bot.send_message(message.chat.id, msg, reply_markup=buttons())
 
-
 @bot.message_handler(func=lambda message: True)
 def main_messages(message):
     if message.text == menu[0]:
-        buttons_clicked.append(message.text)
+        # msg = "Please enter your credentials"
+        # bot.send_message(message.chat.id, msg, reply_markup=buttons())
+        # buttons_clicked.append(message.text)
         login(message)
     elif message.text == menu[1]:
         markup = telebot.types.ReplyKeyboardRemove()
         bot.send_message(message.from_user.id, "GPA Prediction Tool",
                          reply_markup=markup)
-    elif message.text == success_login[0]:
-        buttons_clicked.append(message.text)
-        bot.send_message(message.from_user.id, success_login[0],
-                         reply_markup=buttons("my_courses"))
-    elif message.text == success_login[1]:
-        buttons_clicked.append(message.text)
-        bot.send_message(message.from_user.id, success_login[1],
-                         reply_markup=buttons("my_status"))
-    elif message.text == success_login[2]:
-        bot.send_message(message.from_user.id, "Pulling Grades ... ",
-                         reply_markup=buttons("s_login"))
-        My_Grades(message)
-    elif message.text == success_login[3]:
-        bot.send_message(message.from_user.id, success_login[3],
-                         reply_markup=buttons("s_login"))
-    elif message.text == MyC[0]:
-        bot.send_message(message.from_user.id, "Pulling all courses . . .",
-                         reply_markup=buttons("my_courses"))
-        All_Courses(message)
-    elif message.text == MyC[1]:
-        msg = bot.send_message(message.from_user.id, "Enter year",
-                               reply_markup=buttons("my_courses"))
-        choice = 'y'
-        bot.register_next_step_handler(msg, year_handler, choice)
-        # year_handler(message,choice)
-    elif message.text == MyC[2]:
-        msg = bot.send_message(message.from_user.id, "Enter year",
-                               reply_markup=buttons("my_courses"))
-        choice = 's'
-        bot.register_next_step_handler(msg, year_handler, choice)
-        # year_handler(message,choice)
-    elif message.text == MyS[0]:
-        bot.send_message(message.from_user.id, MyS[0],
-                         reply_markup=buttons("my_status"))
-    elif message.text == MyS[1]:
-        bot.send_message(message.from_user.id, MyS[1],
-                         reply_markup=buttons("my_status"))
-    elif message.text == MyS[2]:
-        bot.send_message(message.from_user.id, MyS[2],
-                         reply_markup=buttons("my_status"))
-    elif message.text == "Back":
-        back_button_handler(message)
-    elif message.text == "Back to Menu":
-        still_loggedin_checker(message)
-    else:
-        bot.send_message(message.from_user.id, "I didn't get what you say ...")
+    elif master_check==True:
+        if message.text == success_login[0]:
+            buttons_clicked.append(message.text)
+            bot.send_message(message.from_user.id, success_login[0],
+                            reply_markup=buttons("my_courses"))
+        elif message.text == success_login[1]:
+            buttons_clicked.append(message.text)
+            bot.send_message(message.from_user.id, success_login[1],
+                            reply_markup=buttons("my_status"))
+        elif message.text == success_login[2]:
+            bot.send_message(message.from_user.id, "Pulling Grades ... ",
+                            reply_markup=buttons("s_login"))
+            My_Grades(message)
+        elif message.text == success_login[3]:
+            bot.send_message(message.from_user.id, success_login[3],
+                            reply_markup=buttons("s_login"))
+        elif message.text == MyC[0]:
+            bot.send_message(message.from_user.id, "Pulling all courses . . .",
+                            reply_markup=buttons("my_courses"))
+            All_Courses(message)
+        elif message.text == MyC[1]:
+            msg = bot.send_message(message.from_user.id, "Enter year",
+                                reply_markup=buttons("my_courses"))
+            choice = 'y'
+            bot.register_next_step_handler(msg, year_handler, choice)
+        elif message.text == MyC[2]:
+            msg = bot.send_message(message.from_user.id, "Enter year",
+                                reply_markup=buttons("my_courses"))
+            choice = 's'
+            bot.register_next_step_handler(msg, year_handler, choice)
+        elif message.text == MyS[0]:
+            current_cgpa(message)
+        elif message.text == MyS[1]:
+            msg=bot.send_message(message.from_user.id, "Enter year",
+                            reply_markup=buttons("my_status"))
+            bot.register_next_step_handler(msg, status_year_handler)
+        elif message.text == MyS[2]:
+            bot.send_message(message.from_user.id, MyS[2],
+                            reply_markup=buttons("my_status"))
+            semester_grades(message)
+        elif message.text == "Back":
+                back_button_handler(message)
+        elif message.text == "Back to Menu":
+            still_loggedin_checker(message)
+        else:
+            bot.send_message(message.from_user.id, "I didn't get what you say ...")
+    elif master_check==False:
+        bot.send_message(message.chat.id, "You are not logged in yet , please press Login button and continue.")
+    
 
 
 def back_button_handler(message):
@@ -140,11 +153,8 @@ def back_button_handler(message):
         for i in buttons_clicked[:length-1]:
             buttons_clicked.remove(i)
     if buttons_clicked[0] == "My Courses" or buttons_clicked[0] == "My Status":
-        bot.send_message(message.from_user.id, "Back",
-                         reply_markup=buttons("s_login"))
-    elif buttons_clicked[0] == "Login":
-        bot.send_message(message.chat.id, "Back", reply_markup=buttons("Menu"))
-
+        # bot.send_message(message.from_user.id, "Back",reply_markup=buttons("s_login"))
+        bot.edit_message_reply_markup(reply_markup=buttons("s_login"))
 
 def login(message):
     page_to_scrape.get(url)
@@ -184,17 +194,20 @@ def login_validator(message, usr, passd):
 
 
 def wrong_cred_handler(message, c_login):
+    global master_check
+    master_check=False
     if (c_login != "People Online:"):
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
         bot.send_message(message.chat.id, msg)
         login(message)
     else:
+        master_check=True
         name = page_to_scrape.find_element(
             By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
         msg = "Login Successful !!\nLogged in as: "+name
         bot.send_message(message.from_user.id, msg,
                          reply_markup=buttons("s_login"))
-
+        
 
 def still_loggedin_checker(message):
     markup = types.InlineKeyboardMarkup()
@@ -211,6 +224,8 @@ def user_answer(call):
     if call.data == "y":
         page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
         msg = "You are logged out !!"
+        global master_check
+        master_check=False
         bot.send_message(message.chat.id, msg, reply_markup=buttons("Menu"))
     elif call.data == "n":
         bot.send_message(message.chat.id, "Logging out Cancelled")
@@ -239,8 +254,6 @@ def All_Courses(message):
 
        
 def year_handler(message, choice):
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
     year = message.text
 
     if choice == 'y':
@@ -260,6 +273,8 @@ def semester_handler(message, year,choice):
 
 
 def validator(message, year, semester,choice):
+    page_to_scrape.find_element(
+        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
     courseTitle = page_to_scrape.find_elements(
         By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
     credit_hour = page_to_scrape.find_elements(
@@ -267,7 +282,7 @@ def validator(message, year, semester,choice):
     year1 = page_to_scrape.find_elements(
         By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
     sem1 = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
+        By.XPATH, "//div/table/tbody/tr/td[6]/div/div[1]")
     dept = page_to_scrape.find_elements(
         By.XPATH, "//option")
     
@@ -292,14 +307,18 @@ def validator(message, year, semester,choice):
             bot.send_message(message.chat.id,full_str)
 
     elif choice=='s':
-        if int(year)>int(year_max):
+        if int(year)>int(year_max) and int(semester)>2:
+            bot.send_message(message.chat.id,"Both your entries are wrong. Please start again")
+            msg=bot.send_message(message.chat.id, "Please, Enter year again")
+            bot.register_next_step_handler(msg,year_handler,choice)
+        elif int(year)>int(year_max):
             bot.send_message(message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
             msg=bot.send_message(message.chat.id, "Please, Enter year again")
             bot.register_next_step_handler(msg,year_handler,choice)
         elif int(semester)>2:
             bot.send_message(message.chat.id, "There are only 2 semesters")
             msg=bot.send_message(message.chat.id, "Please, Enter semester again")
-            bot.register_next_step_handler(msg,semester_handler,choice)
+            bot.register_next_step_handler(msg,semester_handler,year,choice)
         else:
             course_list = {}
             for i in range(len(courseTitle)):
@@ -312,10 +331,78 @@ def validator(message, year, semester,choice):
             bot.send_message(message.chat.id,full_str)
 
 
-def My_Status(message):
-    msg = "My Status option"
-    bot.send_message(message.chat.id, msg)
+def status_year_handler(message):
+    year = message.text
+    msg=bot.send_message(message.chat.id, "Enter semester")
+    bot.register_next_step_handler(msg,status_semester_handler,year)
 
+def status_semester_handler(message, year):
+    semester = message.text
+    bot.send_message(
+        message.chat.id, "Checking availability . . .")
+    status_validator(message, year, semester)
+
+def status_validator(message,year,semester):
+    page_to_scrape.find_element(
+        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+    year_status=page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+    sem_status=page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
+    sgpa=page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[10]/div/div[1]")
+    years = []
+    for i in range(1, len(year_status)):
+        years.append(year_status[i].text)
+
+    year_max = max(years)
+
+    if int(year)>int(year_max) and int(semester)>2:
+        bot.send_message(message.chat.id,"Both your entries are wrong. Please start again")
+        msg=bot.send_message(message.chat.id, "Please, Enter year again")
+        bot.register_next_step_handler(msg,status_year_handler)
+    elif int(year)>int(year_max):
+        bot.send_message(message.chat.id, "You didn't get there")
+        msg=bot.send_message(message.chat.id, "Please, Enter year again")
+        bot.register_next_step_handler(msg,status_year_handler)
+    elif int(semester)>2:
+        bot.send_message(message.chat.id, "There are only 2 semesters")
+        msg=bot.send_message(message.chat.id, "Please, Enter semester again")
+        bot.register_next_step_handler(msg,status_semester_handler,year)
+    else:
+        for i in range(len(year_status)):
+            if year_status[i].text==year:
+                if sem_status[i].text==semester:
+                    sem_gpa=sgpa[i].text        
+        full_str="Your GPA in "+cardinal_ordinal[int(year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
+        bot.send_message(message.chat.id,full_str)
+def current_cgpa(message):
+    page_to_scrape.find_element(
+        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+    cgpa = page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[11]/div/div[1]")
+    year_status=page_to_scrape.find_elements(
+        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+    years = []
+    for i in range(1, len(year_status)):
+        years.append(year_status[i].text)
+
+    year_max = max(years)
+    for i in range(len(year_status)):
+            if year_status[i].text==year_max:
+                c_gpa=cgpa[i].text 
+    
+    if c_gpa=="":
+        bot.send_message(message.chat.id, "Your current CGPA is not known")
+    else:
+        msg="Your current CGPA is "+c_gpa
+        bot.send_message(message.chat.id, msg)
+
+def semester_grades(message):
+    page_to_scrape.find_element(
+        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+    page_to_scrape.find_element(
+        By.CSS_SELECTOR, "td.ob_gDGE.ob_gC.ob_gC_Fc > div > div.ob_gDGEB > img").click()
 
 def My_Grades(message):
     page_to_scrape.find_element(
