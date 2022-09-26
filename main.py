@@ -4,6 +4,8 @@ import time
 import telebot
 from telebot import types
 from telebot import formatting
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 API_file = open('Token.txt', 'r')
@@ -14,9 +16,11 @@ bot = telebot.TeleBot(API_TOKEN)
 print("Bot started ...")
 url = 'https://studentinfo.bdu.edu.et/login.aspx?ReturnUrl=%2f'
 
-
-page_to_scrape = webdriver.Edge()
-page_to_scrape.minimize_window()
+options = Options()
+options.headless = True
+page_to_scrape = webdriver.Chrome(options=options)
+# page_to_scrape = webdriver.Chrome()
+# page_to_scrape.minimize_window()
 page_to_scrape.get(url)
 
 menu = ["Login", "Predict GPA"]
