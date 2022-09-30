@@ -135,12 +135,12 @@ def main_messages(message):
             msg = bot.send_message(message.from_user.id, "Enter year",
                                    reply_markup=buttons("my_courses"))
             choice = 'y'
-            bot.register_next_step_handler(msg, year_handler, choice)
+            bot.register_next_step_handler(msg, course_year_handler, choice)
         elif message.text == MyC[2]:
             msg = bot.send_message(message.from_user.id, "Enter year",
                                    reply_markup=buttons("my_courses"))
             choice = 's'
-            bot.register_next_step_handler(msg, year_handler, choice)
+            bot.register_next_step_handler(msg, course_year_handler, choice)
         elif message.text == MyS[0]:
             current_cgpa(message)
         elif message.text == MyS[1]:
@@ -286,27 +286,27 @@ def All_Courses(message):
         bot.send_message(message.chat.id,"The database is being updated, please try agian later")
 
 
-def year_handler(message, choice):
+def course_year_handler(message, choice):
     year = message.text
 
     if choice == 'y':
         semester = 0
         bot.send_message(message.chat.id, "Checking availability . . .")
-        validator(message, year, semester, choice)
+        course_validator(message, year, semester, choice)
     elif choice == 's':
         sent_msg = bot.send_message(message.chat.id, "Enter Semester")
         bot.register_next_step_handler(
-            sent_msg, semester_handler, year, choice)
+            sent_msg, course_semester_handler, year, choice)
 
 
-def semester_handler(message, year, choice):
+def course_semester_handler(message, year, choice):
     semester = message.text
     bot.send_message(
         message.chat.id, "Checking availability . . .")
-    validator(message, year, semester, choice)
+    course_validator(message, year, semester, choice)
 
 
-def validator(message, year, semester, choice):
+def course_validator(message, year, semester, choice):
     try:
         page_to_scrape.find_element(
             By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
@@ -327,11 +327,14 @@ def validator(message, year, semester, choice):
 
         year_max = max(years)
         if choice == 'y':
-            if int(year) > int(year_max):
+            if year.isdigit() == False:
+                msg = bot.send_message(message.chat.id, "Enter integers only. Please, Enter year again")
+                bot.register_next_step_handler(msg, course_year_handler, choice)
+            elif int(year) > int(year_max):
                 bot.send_message(
                     message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
                 msg = bot.send_message(message.chat.id, "Please, Enter year again")
-                bot.register_next_step_handler(msg, year_handler, choice)
+                bot.register_next_step_handler(msg, course_year_handler, choice)
             else:
                 course_list = {}
                 for i in range(len(courseTitle)):
@@ -344,21 +347,24 @@ def validator(message, year, semester, choice):
                 bot.send_message(message.chat.id, full_str)
 
         elif choice == 's':
-            if int(year) > int(year_max) and int(semester) > 2:
+            if year.isdigit() == False or semester.isdigit() == False:
+                msg = bot.send_message(message.chat.id, "Enter integers only. Please, Enter year again")
+                bot.register_next_step_handler(msg, course_year_handler, choice)
+            elif int(year) > int(year_max) and int(semester) > 2:
                 bot.send_message(
                     message.chat.id, "Both your entries are wrong. Please start again")
                 msg = bot.send_message(message.chat.id, "Please, Enter year again")
-                bot.register_next_step_handler(msg, year_handler, choice)
+                bot.register_next_step_handler(msg, course_year_handler, choice)
             elif int(year) > int(year_max):
                 bot.send_message(
                     message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
                 msg = bot.send_message(message.chat.id, "Please, Enter year again")
-                bot.register_next_step_handler(msg, year_handler, choice)
+                bot.register_next_step_handler(msg, course_year_handler, choice)
             elif int(semester) > 2:
                 bot.send_message(message.chat.id, "There are only 2 semesters")
                 msg = bot.send_message(
                     message.chat.id, "Please, Enter semester again")
-                bot.register_next_step_handler(msg, semester_handler, year, choice)
+                bot.register_next_step_handler(msg, course_semester_handler, year, choice)
             else:
                 course_list = {}
                 for i in range(len(courseTitle)):
@@ -403,7 +409,10 @@ def status_validator(message, year, semester):
 
         year_max = max(years)
 
-        if int(year) > int(year_max) and int(semester) > 2:
+        if year.isdigit() == False or semester.isdigit() == False:
+            msg = bot.send_message(message.chat.id, "Enter integers only. Please, Enter year again")
+            bot.register_next_step_handler(msg, status_year_handler)
+        elif int(year) > int(year_max) and int(semester) > 2:
             bot.send_message(
                 message.chat.id, "Both your entries are wrong. Please start again")
             msg = bot.send_message(message.chat.id, "Please, Enter year again")
@@ -456,7 +465,6 @@ def current_cgpa(message):
         bot.send_message(message.chat.id,"The database is being updated, please try again later")
 
 
-
 def sgrade_year_handler(message):
     year = message.text
     msg = bot.send_message(message.chat.id, "Enter semester")
@@ -484,18 +492,18 @@ def sgrade_validator(message, year, semester):
             years.append(year_status[i].text)
 
         year_max = max(years)
-        if int(year) > int(year_max) and int(semester) > 2:
-            bot.send_message(
-                message.chat.id, "Both your entries are wrong. Please start again")
-            msg = bot.send_message(message.chat.id, "Please, Enter year again")
+        if year.isdigit() == False or semester.isdigit() == False:
+            msg = bot.send_message(message.chat.id, "Enter integers only. Please, Enter year again")
+            bot.register_next_step_handler(msg, sgrade_year_handler)
+        elif int(year) > int(year_max) and int(semester) > 2:
+            msg = bot.send_message(
+                message.chat.id, "Both your entries are invalid. Please, Enter year again")
             bot.register_next_step_handler(msg, sgrade_year_handler)
         elif int(year) > int(year_max):
-            bot.send_message(message.chat.id, "You didn't get there")
-            msg = bot.send_message(message.chat.id, "Please, Enter year again")
+            msg = bot.send_message(message.chat.id, "You didn't get there. Please, Enter year again")
             bot.register_next_step_handler(msg, sgrade_year_handler)
         elif int(semester) > 2:
-            bot.send_message(message.chat.id, "There are only 2 semesters")
-            msg = bot.send_message(message.chat.id, "Please, Enter semester again")
+            msg = bot.send_message(message.chat.id, "There are only 2 semesters. Please, Enter semester again")
             bot.register_next_step_handler(msg, sgrade_semester_handler, year)
         else:
             grade_list = {}
@@ -522,7 +530,7 @@ def sgrade_validator(message, year, semester):
                             temp_data = {title[i].text: grade[i].text}
                             grade_list.update(temp_data)
 
-            full_str = "\n".join("{}\t\t{}".format(v, k)
+            full_str = "\n".join("{}  {}".format(v, k)
                                     for k, v in grade_list.items())
             bot.send_message(message.chat.id, full_str)
             page_to_scrape.find_element(
