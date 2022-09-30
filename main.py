@@ -4,11 +4,11 @@ import time
 import telebot
 from telebot import types
 from telebot import formatting
-from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import WebDriverException
-
+# from selenium.common.exceptions import WebDriverException
+# import WebDriver
+import json
 
 API_file = open('Token.txt', 'r')
 API_TOKEN = API_file.read() 
@@ -54,6 +54,7 @@ cardinal_ordinal = {
 #     # return page_to_scrape
 
 # page_to_scrape = webdriver_initiate()
+# page_to_scrape = webdriver.start_driver()
 
 def buttons(type="Menu"):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -106,9 +107,10 @@ def main_messages(message):
     elif message.text == menu[0]:
         login(message)
     elif message.text == menu[1]:
-        markup = telebot.types.ReplyKeyboardRemove()
-        msg = "This is a GPA Prediction Tool. To use it please enter your department . . ."
-        bot.send_message(message.from_user.id, msg, reply_markup=markup)
+        # markup = telebot.types.ReplyKeyboardRemove()
+        gpa_prediction(message)
+        # msg = "This is a GPA Prediction Tool. To use it please enter your department . . ."
+        # bot.send_message(message.from_user.id, msg, reply_markup=markup)
     elif master_check == True:
         if message.text == success_login[0]:
             buttons_clicked.append(message.text)
@@ -170,16 +172,21 @@ def back_button_handler(message):
 
 def login(message):
     try:
+        # page_to_scrape = WebDriver.get_instance()
+        # page_to_scrape = WebDriver.start_driver()
+        # page_to_scrape.set_page_load_timeout(15)
         page_to_scrape.get(url)
-    except WebDriverException:
+    except Exception:
         bot.send_message(message.chat.id,"Connection to the server timed out, plesase try again later")
     try:
         page_to_scrape. find_element(
             By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
+        # page_to_scrape.find_element(
+        # By.XPATH, "//div/div[1]/div/div[1]/a").click()
         sent_msg = bot.send_message(message.chat.id, "Enter your username")
         bot.register_next_step_handler(sent_msg, username_handler)
     except NoSuchElementException:
-        pass
+        print("No Element Found")
 
 
 def username_handler(message):
@@ -196,6 +203,8 @@ def password_handler(message, username):
 
 
 def login_validator(message, usr, passd):
+    
+    # page_to_scrape = WebDriver.start_driver()
     usrname = page_to_scrape.find_element(
         By.ID, "dnn_ctr_Login_Login_DNN_txtUsername")
     passwd = page_to_scrape.find_element(
@@ -236,40 +245,45 @@ def still_loggedin_checker(message):
         message.chat.id, 'You are still Logged in. Do you want to log out ?', reply_markup=markup)
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def user_answer(call):
-    message = call.message
-    if call.data == "y":
+@bot.callback_query_handler(lambda query: query.data in ["y","n"])
+def user_answer(query):
+    message = query.message
+    if query.data == "y":
         page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
         msg = "You are logged out !!"
         global master_check
         master_check = False
+        bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
         bot.send_message(message.chat.id, msg, reply_markup=buttons("Menu"))
-    elif call.data == "n":
+    elif query.data == "n":
+        bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
         bot.send_message(message.chat.id, "Logging out Cancelled")
 
 
 def All_Courses(message):
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
-    courseTitle = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
-    credit_hour = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-    dept = page_to_scrape.find_elements(
-        By.XPATH, "//option")
+    try:
+        page_to_scrape.find_element(
+            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
+        courseTitle = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
+        credit_hour = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+        dept = page_to_scrape.find_elements(
+            By.XPATH, "//option")
 
-    course_list = {}
-    for i in range(len(courseTitle)):
-        temp_data = {courseTitle[i].text: credit_hour[i].text}
-        course_list.update(temp_data)
+        course_list = {}
+        for i in range(len(courseTitle)):
+            temp_data = {courseTitle[i].text: credit_hour[i].text}
+            course_list.update(temp_data)
 
-    full_str = "\n".join("{}\t\t{}".format(v, k)
-                         for k, v in course_list.items())
-    size = "There are " + str(len(courseTitle)-1) + \
-        " courses in " + dept[0].text+" Department"
-    bot.send_message(message.chat.id, full_str)
-    bot.send_message(message.chat.id, size)
+        full_str = "\n".join("{}\t\t{}".format(v, k)
+                            for k, v in course_list.items())
+        size = "There are " + str(len(courseTitle)-1) + \
+            " courses in " + dept[0].text+" Department"
+        bot.send_message(message.chat.id, full_str)
+        bot.send_message(message.chat.id, size)
+    except Exception:
+        bot.send_message(message.chat.id,"The database is being updated, please try agian later")
 
 
 def year_handler(message, choice):
@@ -293,68 +307,71 @@ def semester_handler(message, year, choice):
 
 
 def validator(message, year, semester, choice):
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
-    courseTitle = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
-    credit_hour = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-    year1 = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
-    sem1 = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[6]/div/div[1]")
-    dept = page_to_scrape.find_elements(
-        By.XPATH, "//option")
+    try:
+        page_to_scrape.find_element(
+            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
+        courseTitle = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
+        credit_hour = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+        year1 = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
+        sem1 = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[6]/div/div[1]")
+        dept = page_to_scrape.find_elements(
+            By.XPATH, "//option")
 
-    years = []
-    for i in range(1, len(year1)):
-        years.append(year1[i].text)
+        years = []
+        for i in range(1, len(year1)):
+            years.append(year1[i].text)
 
-    year_max = max(years)
-    if choice == 'y':
-        if int(year) > int(year_max):
-            bot.send_message(
-                message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
-            msg = bot.send_message(message.chat.id, "Please, Enter year again")
-            bot.register_next_step_handler(msg, year_handler, choice)
-        else:
-            course_list = {}
-            for i in range(len(courseTitle)):
-                if year1[i].text == year:
-                    temp_data = {courseTitle[i].text: credit_hour[i].text}
-                    course_list.update(temp_data)
-
-            full_str = "\n".join("{}\t\t{}".format(v, k)
-                                 for k, v in course_list.items())
-            bot.send_message(message.chat.id, full_str)
-
-    elif choice == 's':
-        if int(year) > int(year_max) and int(semester) > 2:
-            bot.send_message(
-                message.chat.id, "Both your entries are wrong. Please start again")
-            msg = bot.send_message(message.chat.id, "Please, Enter year again")
-            bot.register_next_step_handler(msg, year_handler, choice)
-        elif int(year) > int(year_max):
-            bot.send_message(
-                message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
-            msg = bot.send_message(message.chat.id, "Please, Enter year again")
-            bot.register_next_step_handler(msg, year_handler, choice)
-        elif int(semester) > 2:
-            bot.send_message(message.chat.id, "There are only 2 semesters")
-            msg = bot.send_message(
-                message.chat.id, "Please, Enter semester again")
-            bot.register_next_step_handler(msg, semester_handler, year, choice)
-        else:
-            course_list = {}
-            for i in range(len(courseTitle)):
-                if year1[i].text == year:
-                    if sem1[i].text == semester:
+        year_max = max(years)
+        if choice == 'y':
+            if int(year) > int(year_max):
+                bot.send_message(
+                    message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
+                msg = bot.send_message(message.chat.id, "Please, Enter year again")
+                bot.register_next_step_handler(msg, year_handler, choice)
+            else:
+                course_list = {}
+                for i in range(len(courseTitle)):
+                    if year1[i].text == year:
                         temp_data = {courseTitle[i].text: credit_hour[i].text}
                         course_list.update(temp_data)
 
-            full_str = "\n".join("{}\t\t{}".format(v, k)
-                                 for k, v in course_list.items())
-            bot.send_message(message.chat.id, full_str)
+                full_str = "\n".join("{}\t\t{}".format(v, k)
+                                    for k, v in course_list.items())
+                bot.send_message(message.chat.id, full_str)
+
+        elif choice == 's':
+            if int(year) > int(year_max) and int(semester) > 2:
+                bot.send_message(
+                    message.chat.id, "Both your entries are wrong. Please start again")
+                msg = bot.send_message(message.chat.id, "Please, Enter year again")
+                bot.register_next_step_handler(msg, year_handler, choice)
+            elif int(year) > int(year_max):
+                bot.send_message(
+                    message.chat.id, dept[0].text+" is given in total of "+year_max+" years.")
+                msg = bot.send_message(message.chat.id, "Please, Enter year again")
+                bot.register_next_step_handler(msg, year_handler, choice)
+            elif int(semester) > 2:
+                bot.send_message(message.chat.id, "There are only 2 semesters")
+                msg = bot.send_message(
+                    message.chat.id, "Please, Enter semester again")
+                bot.register_next_step_handler(msg, semester_handler, year, choice)
+            else:
+                course_list = {}
+                for i in range(len(courseTitle)):
+                    if year1[i].text == year:
+                        if sem1[i].text == semester:
+                            temp_data = {courseTitle[i].text: credit_hour[i].text}
+                            course_list.update(temp_data)
+
+                full_str = "\n".join("{}\t\t{}".format(v, k)
+                                    for k, v in course_list.items())
+                bot.send_message(message.chat.id, full_str)
+    except Exception:
+        bot.send_message(message.chat.id,"The database is being updated, please try agian later")
 
 
 def status_year_handler(message):
@@ -371,65 +388,73 @@ def status_semester_handler(message, year):
 
 
 def status_validator(message, year, semester):
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
-    year_status = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-    sem_status = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
-    sgpa = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[10]/div/div[1]")
-    years = []
-    for i in range(1, len(year_status)):
-        years.append(year_status[i].text)
+    try:
+        page_to_scrape.find_element(
+            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+        year_status = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+        sem_status = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
+        sgpa = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[10]/div/div[1]")
+        years = []
+        for i in range(1, len(year_status)):
+            years.append(year_status[i].text)
 
-    year_max = max(years)
+        year_max = max(years)
 
-    if int(year) > int(year_max) and int(semester) > 2:
-        bot.send_message(
-            message.chat.id, "Both your entries are wrong. Please start again")
-        msg = bot.send_message(message.chat.id, "Please, Enter year again")
-        bot.register_next_step_handler(msg, status_year_handler)
-    elif int(year) > int(year_max):
-        bot.send_message(message.chat.id, "You didn't get there")
-        msg = bot.send_message(message.chat.id, "Please, Enter year again")
-        bot.register_next_step_handler(msg, status_year_handler)
-    elif int(semester) > 2:
-        bot.send_message(message.chat.id, "There are only 2 semesters")
-        msg = bot.send_message(message.chat.id, "Please, Enter semester again")
-        bot.register_next_step_handler(msg, status_semester_handler, year)
-    else:
-        for i in range(len(year_status)):
-            if year_status[i].text == year:
-                if sem_status[i].text == semester:
-                    sem_gpa = sgpa[i].text
-        full_str = "Your GPA in " + \
-            cardinal_ordinal[int(
-                year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
-        bot.send_message(message.chat.id, full_str)
+        if int(year) > int(year_max) and int(semester) > 2:
+            bot.send_message(
+                message.chat.id, "Both your entries are wrong. Please start again")
+            msg = bot.send_message(message.chat.id, "Please, Enter year again")
+            bot.register_next_step_handler(msg, status_year_handler)
+        elif int(year) > int(year_max):
+            bot.send_message(message.chat.id, "You didn't get there")
+            msg = bot.send_message(message.chat.id, "Please, Enter year again")
+            bot.register_next_step_handler(msg, status_year_handler)
+        elif int(semester) > 2:
+            bot.send_message(message.chat.id, "There are only 2 semesters")
+            msg = bot.send_message(message.chat.id, "Please, Enter semester again")
+            bot.register_next_step_handler(msg, status_semester_handler, year)
+        else:
+            for i in range(len(year_status)):
+                if year_status[i].text == year:
+                    if sem_status[i].text == semester:
+                        sem_gpa = sgpa[i].text
+            full_str = "Your GPA in " + \
+                cardinal_ordinal[int(
+                    year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
+            bot.send_message(message.chat.id, full_str)
+    except Exception:
+        bot.send_message(message.chat.id,"The database is being updated, please try agian later")
 
 
 def current_cgpa(message):
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
-    cgpa = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[11]/div/div[1]")
-    year_status = page_to_scrape.find_elements(
-        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-    years = []
-    for i in range(1, len(year_status)):
-        years.append(year_status[i].text)
+    try:
+        page_to_scrape.find_element(
+            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+        cgpa = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[11]/div/div[1]")
+        year_status = page_to_scrape.find_elements(
+            By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+        years = []
+        for i in range(1, len(year_status)):
+            years.append(year_status[i].text)
 
-    year_max = max(years)
-    for i in range(len(year_status)):
-        if year_status[i].text == year_max:
-            c_gpa = cgpa[i].text
+        year_max = max(years)
+        
+        for i in range(len(year_status)):
+            if year_status[i].text == year_max:
+                c_gpa = cgpa[i].text
 
-    if c_gpa == "":
-        bot.send_message(message.chat.id, "Your current CGPA is not known")
-    else:
-        msg = "Your current CGPA is "+c_gpa
-        bot.send_message(message.chat.id, msg)
+        if c_gpa == "":
+            bot.send_message(message.chat.id, "Your current CGPA is not known")
+        else:
+            msg = "Your current CGPA is "+c_gpa
+            bot.send_message(message.chat.id, msg)
+    except Exception:
+        bot.send_message(message.chat.id,"The database is being updated, please try again later")
+
 
 
 def sgrade_year_handler(message):
@@ -446,85 +471,121 @@ def sgrade_semester_handler(message, year):
 
 
 def sgrade_validator(message, year, semester):
-    page_to_scrape.find_element(
+    try:
+        page_to_scrape.find_element(
         By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
-    year_status = page_to_scrape.find_elements(
+        year_status = page_to_scrape.find_elements(
         By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-    sem_status = page_to_scrape.find_elements(
+        sem_status = page_to_scrape.find_elements(
         By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
 
-    years = []
-    for i in range(1, len(year_status)):
-        years.append(year_status[i].text)
+        years = []
+        for i in range(1, len(year_status)):
+            years.append(year_status[i].text)
 
-    year_max = max(years)
-    if int(year) > int(year_max) and int(semester) > 2:
-        bot.send_message(
-            message.chat.id, "Both your entries are wrong. Please start again")
-        msg = bot.send_message(message.chat.id, "Please, Enter year again")
-        bot.register_next_step_handler(msg, sgrade_year_handler)
-    elif int(year) > int(year_max):
-        bot.send_message(message.chat.id, "You didn't get there")
-        msg = bot.send_message(message.chat.id, "Please, Enter year again")
-        bot.register_next_step_handler(msg, sgrade_year_handler)
-    elif int(semester) > 2:
-        bot.send_message(message.chat.id, "There are only 2 semesters")
-        msg = bot.send_message(message.chat.id, "Please, Enter semester again")
-        bot.register_next_step_handler(msg, sgrade_semester_handler, year)
-    else:
-        grade_list = {}
-        for i in range(len(year_status)):
-            if year_status[i].text == year:
-                if sem_status[i].text == semester:
-                    toggle = 2*i-1
-                    page_to_scrape.find_element(By.CSS_SELECTOR, "tr:nth-child("+str(
-                        toggle)+") > td.ob_gDGE.ob_gC.ob_gC_Fc > div > div.ob_gDGEB > img").click()
-                    time.sleep(3)
-                    title = page_to_scrape.find_elements(
-                        By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-                    grade = page_to_scrape.find_elements(
-                        By.XPATH, "//div/table/tbody/tr/td[6]/div[1]")
-                    len_title = len(title)
-                    for i in range(len(title)):
-                        if title[i].text == "Title":
-                            j = i
-                            break
-                    for i in range(j, len(title)):
-                        if title[i].text in years:
-                            len_title -= 1
-                    for i in range(j, len_title):
-                        temp_data = {title[i].text: grade[i].text}
-                        grade_list.update(temp_data)
+        year_max = max(years)
+        if int(year) > int(year_max) and int(semester) > 2:
+            bot.send_message(
+                message.chat.id, "Both your entries are wrong. Please start again")
+            msg = bot.send_message(message.chat.id, "Please, Enter year again")
+            bot.register_next_step_handler(msg, sgrade_year_handler)
+        elif int(year) > int(year_max):
+            bot.send_message(message.chat.id, "You didn't get there")
+            msg = bot.send_message(message.chat.id, "Please, Enter year again")
+            bot.register_next_step_handler(msg, sgrade_year_handler)
+        elif int(semester) > 2:
+            bot.send_message(message.chat.id, "There are only 2 semesters")
+            msg = bot.send_message(message.chat.id, "Please, Enter semester again")
+            bot.register_next_step_handler(msg, sgrade_semester_handler, year)
+        else:
+            grade_list = {}
+            for i in range(len(year_status)):
+                if year_status[i].text == year:
+                    if sem_status[i].text == semester:
+                        toggle = 2*i-1
+                        page_to_scrape.find_element(By.CSS_SELECTOR, "tr:nth-child("+str(
+                            toggle)+") > td.ob_gDGE.ob_gC.ob_gC_Fc > div > div.ob_gDGEB > img").click()
+                        time.sleep(3)
+                        title = page_to_scrape.find_elements(
+                            By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+                        grade = page_to_scrape.find_elements(
+                            By.XPATH, "//div/table/tbody/tr/td[6]/div[1]")
+                        len_title = len(title)
+                        for i in range(len(title)):
+                            if title[i].text == "Title":
+                                j = i
+                                break
+                        for i in range(j, len(title)):
+                            if title[i].text in years:
+                                len_title -= 1
+                        for i in range(j, len_title):
+                            temp_data = {title[i].text: grade[i].text}
+                            grade_list.update(temp_data)
 
-        full_str = "\n".join("{}\t\t{}".format(v, k)
-                             for k, v in grade_list.items())
-        bot.send_message(message.chat.id, full_str)
-        page_to_scrape.find_element(
-            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
-
+            full_str = "\n".join("{}\t\t{}".format(v, k)
+                                    for k, v in grade_list.items())
+            bot.send_message(message.chat.id, full_str)
+            page_to_scrape.find_element(
+                By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+    except Exception:
+        bot.send_message(message.chat.id,"The database is being updated, please try agian later")    
+        
 
 def My_Grades(message):
-    page_to_scrape.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
+    try:
+        page_to_scrape.find_element(
+            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
 
-    courseTitle = page_to_scrape.find_elements(
-        By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")
-    grade = page_to_scrape.find_elements(
-        By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
+        courseTitle = page_to_scrape.find_elements(
+            By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")
+        grade = page_to_scrape.find_elements(
+            By.XPATH, "//div[1]/table/tbody/tr/td[4]/div")
 
-    grade_list = {}
-    for i in range(len(courseTitle)):
-        temp_data = {courseTitle[i].text: grade[i].text}
-        grade_list.update(temp_data)
+        grade_list = {}
+        for i in range(1,len(courseTitle)):
+            temp_data = {courseTitle[i].text: grade[i].text}
+            grade_list.update(temp_data)
 
-    full_str = "\n".join("{}\t\t{}".format(v, k)
-                         for k, v in grade_list.items())
-    bot.send_message(message.chat.id, full_str)
+        full_str = "\n".join("{}\t\t{}".format(v, k)
+                            for k, v in grade_list.items())
+        bot.send_message(message.chat.id, full_str)
+    except Exception:
+        bot.send_message(message.chat.id,"The database is being updated, please try agian later")
 
 
 def My_Dormitory(message):
     msg = "My Dromitory option"
     bot.send_message(message.chat.id, msg)
+
+with open('dept_list.json') as f:
+    data = json.load(f)
+
+dept_title =  []
+for i in range(len(data)):
+    dept_title.append(data[i]['Department Title'])
+
+def gpa_prediction(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    dept_buttons = [types.InlineKeyboardButton(x,callback_data=x) for x in dept_title]
+    markup.add(*dept_buttons)
+    bot.send_message(
+        message.chat.id, 'Choose Department',reply_markup=markup)
+
+@bot.callback_query_handler(func=lambda call:True)
+def user_answer_dept(call):
+    message = call.message
+    if call.data == dept_title[0]:
+        msg = dept_title[0]
+        # bot.answer_callback_query()
+        bot.send_message(message.chat.id, msg)
+        # gpa_calculator(messsage,dept_title[0])
+    elif call.data == dept_title[1]:
+        msg = dept_title[1]
+        bot.send_message(message.chat.id, msg)
+    elif call.data == dept_title[2]:
+        msg = dept_title[2]
+        bot.send_message(message.chat.id, msg)
 
 
 bot.infinity_polling()
