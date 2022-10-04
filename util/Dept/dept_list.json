@@ -1,22 +1,22 @@
 [
     {
         "Department Title": "Freshman",
-        "Total Year": "1"
+        "Total Year": 1
     },
     {
         "Department Title": "Pre-Engineering",
-        "Total Year": "5"
+        "Total Year": 1
     },
     {
         "Department Title": "Software Engineering",
-        "Total Year": "5"
+        "Total Year": 5
     },
     {
         "Department Title": "Computer Engineering",
-        "Total Year": "5"
+        "Total Year": 5
     },
     {
         "Department Title": "Computer Science",
-        "Total Year": "4"
+        "Total Year": 4
     }
 ]
