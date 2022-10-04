@@ -1,0 +1,482 @@
+[
+    {
+        "Course Code": "Psyc1011",
+        "Course Title": "General Psychology",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1011",
+        "Course Title": "Mathematics for Natural Sciences",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GeES1011",
+        "Course Title": "Geography of Ethiopia and the Horn",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Phys1011",
+        "Course Title": "General Physics",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LoCT1011",
+        "Course Title": "Critical Thinking",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "SpSc1011",
+        "Course Title": "Physical Fitness",
+        "Credit": 0,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1011",
+        "Course Title": "Communicative English Language Skills I",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1041",
+        "Course Title": "Applied Mathematics I",
+        "Credit": 6,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "EmTe1012",
+        "Course Title": "Introduction to Emerging Technologies",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GlTr1012",
+        "Course Title": "Global Trends",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Anth1012",
+        "Course Title": "Social Anthropology",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1012",
+        "Course Title": "Communicative English Language Skills II",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "ECEg1052",
+        "Course Title": "Computer Programming",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MCiE1012",
+        "Course Title": "Moral and Civic Education",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "SEng2041",
+        "Course Title": "Fundamentals of Software Engineering",
+        "Credit": 7,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng2021",
+        "Course Title": "Computer Programming II",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "Math2011",
+        "Course Title": "Discrete Mathematics and Combinatory",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "SEng2011",
+        "Course Title": "Fundamentals of Database Systems",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "Incl2011",
+        "Course Title": "Inclusiveness",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Econ2011",
+        "Course Title": "Introduction to Economics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "SEng2053",
+        "Course Title": "Object-Oriented Software Engineering",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng2122",
+        "Course Title": "Data Structure and Algorithm",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3022",
+        "Course Title": "Computer Organization and Architecture",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3122",
+        "Course Title": "Operating Systems and Systems Programming",
+        "Credit": 7,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng6022",
+        "Course Title": "Object Oriented Programming",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng7022",
+        "Course Title": "Fundamental of Networking",
+        "Credit": 7,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "Stat4012",
+        "Course Title": "Probability and Statistics",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3031",
+        "Course Title": "Microprocessor and Assembly Language",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3041",
+        "Course Title": "Advanced Database Systems",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3051",
+        "Course Title": "Requirements Engineering",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3053",
+        "Course Title": "Software Engineering Tools and Practices",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3071",
+        "Course Title": "Web Design and Programming",
+        "Credit": 7,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3073",
+        "Course Title": "Fundamental of Software Security",
+        "Credit": 6,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3052",
+        "Course Title": "Software Architecture and Design",
+        "Credit": 6,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3062",
+        "Course Title": "Advanced Programming",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3072",
+        "Course Title": "Fundamentals of Cloud Computing and IoT",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3074",
+        "Course Title": "Fundamentals of Distributed Systems",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3092",
+        "Course Title": "Fundamentals of Machine Learning",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng3112",
+        "Course Title": "Software Project Management",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng4031",
+        "Course Title": "Principles of Compiler Design",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng4033",
+        "Course Title": "Real-Time and Embedded Systems",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng4051",
+        "Course Title": "Software Testing and Quality Assurance",
+        "Credit": 7,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng4061",
+        "Course Title": "Mobile Application Development",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng4091",
+        "Course Title": "Fundamentals of Artificial Intelligence",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "MgMt2011",
+        "Course Title": "Entrepreneurship",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "SEng4102",
+        "Course Title": "Holistic Exam",
+        "Credit": 0,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng4104",
+        "Course Title": "Internship",
+        "Credit": 30,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5051",
+        "Course Title": "Software Evolution and Maintenance",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5053",
+        "Course Title": "Software Metrics",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5091",
+        "Course Title": "Fundamentals of Big Data Analysis and Business Intelligence",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5111",
+        "Course Title": "Project I",
+        "Credit": 7,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5121",
+        "Course Title": "Event Driven Programming",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5123",
+        "Course Title": "Distributed Database Management systems",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5125",
+        "Course Title": "Parallel Computing",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5127",
+        "Course Title": "Design and Analysis of Algorithms",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5129",
+        "Course Title": "Web Services",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5122",
+        "Course Title": "Software Agent",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5124",
+        "Course Title": "Software Risk Management",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5128",
+        "Course Title": "Social networks",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    },
+    {
+        "Course Code": "SEng5120",
+        "Course Title": "Software Component Design",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 2,
+        "Course Type": "Major  Course"
+    }
+]

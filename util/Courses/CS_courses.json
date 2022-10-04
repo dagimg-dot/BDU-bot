@@ -1,0 +1,458 @@
+[
+    {
+        "Course Code": "Psyc1011",
+        "Course Title": "General Psychology",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1011",
+        "Course Title": "Mathematics for Natural Sciences",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GeES1011",
+        "Course Title": "Geography of Ethiopia and the Horn",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Phys1011",
+        "Course Title": "General Physics",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LoCT1011",
+        "Course Title": "Critical Thinking",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "SpSc1011",
+        "Course Title": "Physical Fitness",
+        "Credit": 0,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1011",
+        "Course Title": "Communicative English Language Skills I",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1041",
+        "Course Title": "Applied Mathematics I",
+        "Credit": 6,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "EmTe1012",
+        "Course Title": "Introduction to Emerging Technologies",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GlTr1012",
+        "Course Title": "Global Trends",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Anth1012",
+        "Course Title": "Social Anthropology",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1012",
+        "Course Title": "Communicative English Language Skills II",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "ECEg1052",
+        "Course Title": "Computer Programming",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MCiE1012",
+        "Course Title": "Moral and Civic Education",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Incl2011",
+        "Course Title": "Inclusive Education",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Econ2013",
+        "Course Title": "Introduction to Economics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "CoSc2041",
+        "Course Title": "Fundamentals of Programming II",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc2071",
+        "Course Title": "Fundamentals of Database Systems",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Eeng2161",
+        "Course Title": "Fundamentals of Electricity and Electronics Device",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Stat2171",
+        "Course Title": "probability and Statistics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "CoSc3051",
+        "Course Title": "Data Communication and Computer Networking",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Math2042",
+        "Course Title": "Linear Algebra",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Eeng2072",
+        "Course Title": "Digital Electronics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "CoSc2062",
+        "Course Title": "Advanced Database System",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc2024",
+        "Course Title": "Object Oriented Software Engineering",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc2032",
+        "Course Title": "Computer Organization and Architecture",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc2022",
+        "Course Title": "Data Structure and Algorithm",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Math3041",
+        "Course Title": "Discrete Mathematics and Combinatory",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "CoSc3033",
+        "Course Title": "Microprocessor and Assembly language Programming",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Math3043",
+        "Course Title": "Numerical Analysis",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "CoSc3121",
+        "Course Title": "Internet programming I",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3053",
+        "Course Title": "Wireless Communication and Mobile Computing",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3021",
+        "Course Title": "Analysis of Algorithms",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3023",
+        "Course Title": "Object-Oriented Programming",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4100",
+        "Course Title": "Simulation and Modeling",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4102",
+        "Course Title": "Computer Vision and Image Processing",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4104",
+        "Course Title": "Real-Time and Embedded Systems",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4106",
+        "Course Title": "Windows Programming",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4108",
+        "Course Title": "Introduction to Data Mining and Warehousing",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3022",
+        "Course Title": "Formal Language and Automata Theory",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3122",
+        "Course Title": "Internet Programming II",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc2034",
+        "Course Title": "Operating Systems",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3024",
+        "Course Title": "Advanced Programming",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc3082",
+        "Course Title": "Computer Graphics",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4051",
+        "Course Title": "Computer Security",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4021",
+        "Course Title": "Complexity Theory",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4111",
+        "Course Title": "Research Methods in Computer Science",
+        "Credit": 3,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4113",
+        "Course Title": "Seminar",
+        "Credit": 3,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4117",
+        "Course Title": "Final Year Project I",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4022",
+        "Course Title": "Compiler Design",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4115",
+        "Course Title": "Internship",
+        "Credit": 3,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4024",
+        "Course Title": "Mobile Application Development",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4052",
+        "Course Title": "Introduction to Distributed Systems",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4092",
+        "Course Title": "Introduction to Artificial Intelligence",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4094",
+        "Course Title": "Introduction to Neural Networks",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoSc4118",
+        "Course Title": "Final Year Project II",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Enbd2012",
+        "Course Title": "Entrepreneurship",
+        "Credit": 4,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    }
+]

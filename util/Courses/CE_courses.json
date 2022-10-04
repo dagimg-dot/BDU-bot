@@ -1,0 +1,338 @@
+[
+    {
+        "Course Code": "Psyc1011",
+        "Course Title": "General Psychology",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1011",
+        "Course Title": "Mathematics for Natural Sciences",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GeES1011",
+        "Course Title": "Geography of Ethiopia and the Horn",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Phys1011",
+        "Course Title": "General Physics",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LoCT1011",
+        "Course Title": "Critical Thinking",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "SpSc1011",
+        "Course Title": "Physical Fitness",
+        "Credit": 0,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1011",
+        "Course Title": "Communicative English Language Skills I",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1041",
+        "Course Title": "Applied Mathematics I",
+        "Credit": 6,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "EmTe1012",
+        "Course Title": "Introduction to Emerging Technologies",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GlTr1012",
+        "Course Title": "Global Trends",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Anth1012",
+        "Course Title": "Social Anthropology",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1012",
+        "Course Title": "Communicative English Language Skills II",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "ECEg1052",
+        "Course Title": "Computer Programming",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MCiE1012",
+        "Course Title": "Moral and Civic Education",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MEng2031",
+        "Course Title": "Engineering Drawing",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "CEng2061",
+        "Course Title": "Engineering Mechanics I (Statics)",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Stat2041",
+        "Course Title": "Probability and Statistics for Engineers",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math2041",
+        "Course Title": "Applied Mathematics II",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Incl2011",
+        "Course Title": "Inclusiveness",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Econ2021",
+        "Course Title": "Introduction to Economics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "CoEng2112",
+        "Course Title": "Intermediate Computer Programming",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "EEng2072",
+        "Course Title": "Fundamentals of Electrical Engineering",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "EEng2074",
+        "Course Title": "Fundamental of Electrical Engineering Lab",
+        "Credit": 3,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MEng2062",
+        "Course Title": "Engineering Mechanics II(Dynamics)",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math2042",
+        "Course Title": "Applied Engineering Mathematics III",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "CoEng2122",
+        "Course Title": "Data Structure",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoEng2114",
+        "Course Title": "Computational Methods",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "EEng3071",
+        "Course Title": "Applied Electronics I",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Minor Course"
+    },
+    {
+        "Course Code": "EEng3081",
+        "Course Title": "Signals and System Analysis",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Minor Course"
+    },
+    {
+        "Course Code": "EEng3073",
+        "Course Title": "Electrical Workshop Practice",
+        "Credit": 3,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Minor Course"
+    },
+    {
+        "Course Code": "Phys3071",
+        "Course Title": "Applied Modern Physics",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Minor Course"
+    },
+    {
+        "Course Code": "CoEng3131",
+        "Course Title": "Computer Networks",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Math3051",
+        "Course Title": "Discrete Mathematics",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Minor Course"
+    },
+    {
+        "Course Code": "CoEng3121",
+        "Course Title": "Database Management Systems",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoEng3132",
+        "Course Title": "Internet Programming",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoEng3122",
+        "Course Title": "Algorithms Analysis and Design",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoEng3092",
+        "Course Title": "Digital Logic Design",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "EEng3074",
+        "Course Title": "Basic Electrical Devices",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "EEng3072",
+        "Course Title": "Applied Electronics II",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "EEng3082",
+        "Course Title": "Network Analysis and Synthesis",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "CoEng5131",
+        "Course Title": "Artificial Intelligence",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "MGMT 1012",
+        "Course Title": "Entrepreneurship",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    }
+]

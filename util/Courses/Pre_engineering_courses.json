@@ -1,0 +1,50 @@
+[
+    {
+        "Course Code": "MEng2031",
+        "Course Title": "Engineering Drawing",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "CEng2061",
+        "Course Title": "Engineering Mechanics I (Statics)",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Stat2041",
+        "Course Title": "Probability and Statistics for Engineers",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math2041",
+        "Course Title": "Applied Mathematics II",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Incl2011",
+        "Course Title": "Inclusiveness",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Econ2021",
+        "Course Title": "Introduction to Economics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    }
+]
