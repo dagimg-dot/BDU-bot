@@ -1,7 +1,7 @@
 from bot import bot
 from telebot import types
 import json
-from functionalities.gpa_calculator import gpa_calculator
+from functionalities.GPA_Prediction.additional_info import get_add_info
 
 with open('util\Dept\dept_list.json') as f:
     data = json.load(f)
@@ -24,23 +24,21 @@ def user_answer_dept(call):
     if call.data == dept_title[0]:
         msg = dept_title[0]
         bot.answer_callback_query(call.id,"You Chose "+msg)
-        with open('util\Courses\Freshman_courses.json') as fresh:
-            freshman_data = json.load(fresh)
-        gpa_calculator(message,freshman_data)
+        get_add_info(message,msg)
     elif call.data == dept_title[1]:
         msg = dept_title[1]
         bot.answer_callback_query(call.id,"You Chose "+msg)
-        gpa_calculator(message,msg)
+        get_add_info(message,msg)
     elif call.data == dept_title[2]:
         msg = dept_title[2]
         bot.answer_callback_query(call.id,"You Chose "+msg)
-        gpa_calculator(message,msg)
+        get_add_info(message,msg)
     elif call.data == dept_title[3]:
         msg = dept_title[3]
         bot.answer_callback_query(call.id,"You Chose "+msg)
-        gpa_calculator(message,msg)
+        get_add_info(message,msg)
     elif call.data == dept_title[4]:
         msg = dept_title[4]
         bot.answer_callback_query(call.id,"You Chose "+msg)
-        gpa_calculator(message,msg)
+        get_add_info(message,msg)
 

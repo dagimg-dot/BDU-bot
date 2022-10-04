@@ -4,8 +4,8 @@ from util.useful_lists import *
 from util.keyboard_buttons import buttons
 from util.validate_login import *
 from handlers.back_button_handler import back_button_handler
-from functionalities.bdu_sims_login import login
-from functionalities.gpa_prediction_menu import predict_gpa
+from functionalities.SIMS.bdu_sims_login import login
+from functionalities.GPA_Prediction.additional_info import predict_gpa
 
 
 
