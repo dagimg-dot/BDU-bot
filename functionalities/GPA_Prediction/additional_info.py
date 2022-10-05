@@ -97,9 +97,11 @@ def dept_identifier(message,year,semester,msg):
 
 def grade_validator(message,msg):
     predicted_grades= message.text
-    # splitted_grades = predicted_grades.split(",")
     splitted_grades = re.split(r'[,\s]',predicted_grades)
-    
+    for i in splitted_grades:
+        for i in splitted_grades:
+            if i == '':
+                splitted_grades.remove(i)
     full_str = '\n'.join([str(i) for i in splitted_grades])
     bot.send_message(message.chat.id,full_str)
  
