@@ -10,5 +10,6 @@ def gpa_calculator(message,credit,splitted_upper):
         credit_sum += credit[i]
     
     GPA = tot_sum / credit_sum
-    sent_msg = "Your Predicted GPA is " + str(GPA)
+    GPA_rounded = round(GPA,2)
+    sent_msg = "Your Predicted GPA is " + str(GPA_rounded)
     bot.send_message(message.chat.id,sent_msg)
