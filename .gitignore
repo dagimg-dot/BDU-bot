@@ -1,5 +1,5 @@
 
 Token.txt
 functionalities/*/__pycache__/
-
+*.pyc
 *.exe
