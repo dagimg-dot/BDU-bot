@@ -10,7 +10,7 @@ def buttons(type="Menu"):
     elif type == "s_login":
         row = [types.KeyboardButton(x) for x in success_login]
         markup.add(*row)
-        markup.add(types.KeyboardButton("Back"))
+        markup.add(types.KeyboardButton("Back to Menu"))
     elif type == "my_courses":
         markup.row_width = 1
         row = [types.KeyboardButton(x) for x in MyC]
