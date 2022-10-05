@@ -5,21 +5,13 @@ from requests import get
 from bot import bot
 from telebot import types
 import json
-from util.useful_lists import cardinal_ordinal
+from util.useful_lists import cardinal_ordinal,dept_title,data
 from os import path
-
-
-with open('util\Dept\dept_list.json') as f:
-    data = json.load(f)
-
-dept_title =  []
-for i in range(len(data)):
-    dept_title.append(data[i]['Department Title'])
+import re
 
 
 def get_add_info(message,msg):
     if msg == dept_title[0]:
-        # dept = "Fre"
         year = "1"
         sent_msg = bot.send_message(message.chat.id,"Enter semester")
         bot.register_next_step_handler(sent_msg,semester_handler,year,msg)
@@ -34,7 +26,7 @@ def get_add_info(message,msg):
         full_str = '\n'.join([str(i) for i in course_title])
         bot.send_message(message.chat.id,"These are the courses for Pre - Engineering \n\n" + full_str)
 
-        sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma with no spaces")
+        sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
         bot.register_next_step_handler(sent_msg,grade_validator,msg)
     else:
         sent_msg = bot.send_message(message.chat.id,"Enter year")
@@ -65,7 +57,7 @@ def year_sem_validator(message,year,semester,msg):
             full_str = '\n'.join([str(i) for i in course_title])
             bot.send_message(message.chat.id,"These are the courses for Freshman year " + cardinal_ordinal[int(semester)] + " semester\n\n" + full_str)
 
-            sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma with no spaces")
+            sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
             bot.register_next_step_handler(sent_msg,grade_validator,msg)
     else:
         for i in range(2,len(dept_title)):
@@ -100,12 +92,14 @@ def dept_identifier(message,year,semester,msg):
                 
                 full_str = '\n'.join([str(i) for i in course_title])
                 bot.send_message(message.chat.id,"These are the courses for "+ cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester\n\n" + full_str)
-                sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma with no spaces")
+                sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
                 bot.register_next_step_handler(sent_msg,grade_validator,msg)
 
 def grade_validator(message,msg):
-    predicted_grades = message.text
-    splitted_grades = predicted_grades.split(",")
+    predicted_grades= message.text
+    # splitted_grades = predicted_grades.split(",")
+    splitted_grades = re.split(r'[,\s]',predicted_grades)
+    
     full_str = '\n'.join([str(i) for i in splitted_grades])
     bot.send_message(message.chat.id,full_str)
-
+ 
