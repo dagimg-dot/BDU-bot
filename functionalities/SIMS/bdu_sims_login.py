@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from util.initiate_webdriver import initiate_driver
 from selenium.common.exceptions import NoSuchElementException
 from util.keyboard_buttons import buttons
-import util.validate_login 
+from util.useful_lists import master_check
 
 
 
@@ -57,12 +57,14 @@ def login_validator(message, usr, passd,page_to_scrape):
 def wrong_cred_handler(message, c_login,page_to_scrape):
     if (c_login != "People Online:"):
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
+        # bot.edit_message_text(msg,message.chat.id,message.message_id,)
         bot.send_message(message.chat.id, msg)
         login(message)
     else:
-        util.validate_login.master_check = True
+        master_check.append('1')
         name = page_to_scrape.find_element(
             By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
         msg = "Login Successful !!\nLogged in as: "+name
         bot.send_message(message.from_user.id, msg,
                          reply_markup=buttons("s_login"))
+        # login_check(master_check)
