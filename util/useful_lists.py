@@ -8,6 +8,8 @@ MyS = ["Cumulative GPA - CGPA", "Semester GPA - SGPA", "Semester Grades"]
 
 Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
 
+buttons_clicked = []
+
 cardinal_ordinal = {
     1: 'first',
     2: 'second',
