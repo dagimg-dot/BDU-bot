@@ -15,7 +15,7 @@ def main_messages(message: Message, bot: TeleBot):
         login(message)
     elif message.text == menu[1]:
         predict_gpa(message)
-    elif master_check[len(master_check)-1] == '1':
+    elif master_check[0] == '1':
         if message.text == success_login[0]:
             buttons_clicked.append(message.text)
             bot.send_message(message.from_user.id, success_login[0],
