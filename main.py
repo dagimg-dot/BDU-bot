@@ -12,7 +12,7 @@ def command_handlers():
     bot.register_message_handler(help_message, commands=['help'], pass_bot=True)
     bot.register_message_handler(menu_handler, commands=['menu'], pass_bot=True)
     
-# Handles all incoming messages from the user
+# Handles all incoming button clicks
 def message_handlers():
     bot.register_message_handler(main_messages,pass_bot=True)
 
