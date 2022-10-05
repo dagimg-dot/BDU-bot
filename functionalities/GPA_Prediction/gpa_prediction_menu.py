@@ -2,13 +2,8 @@ from bot import bot
 from telebot import types
 import json
 from functionalities.GPA_Prediction.additional_info import get_add_info
+from util.useful_lists import dept_title
 
-with open('util\Dept\dept_list.json') as f:
-    data = json.load(f)
-
-dept_title =  []
-for i in range(len(data)):
-    dept_title.append(data[i]['Department Title'])
 
 def predict_gpa(message):
     markup = types.InlineKeyboardMarkup() 

@@ -1,3 +1,5 @@
+import json
+
 menu = ["Login", "Predict GPA"]
 success_login = ["My Courses", "My Status", "My Grades", "My Dormitory"]
 MyC = ["All Courses", "Courses given on a specific year",
@@ -15,3 +17,10 @@ cardinal_ordinal = {
     6: 'sixth',
     7: 'seventh',
 }
+
+with open('util\Dept\dept_list.json') as f:
+    data = json.load(f)
+
+dept_title =  []
+for i in range(len(data)):
+    dept_title.append(data[i]['Department Title'])
