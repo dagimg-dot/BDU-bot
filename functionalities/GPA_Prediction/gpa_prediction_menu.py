@@ -16,24 +16,9 @@ def predict_gpa(message):
 @bot.callback_query_handler(func=lambda call:True)
 def user_answer_dept(call):
     message = call.message
-    if call.data == dept_title[0]:
-        msg = dept_title[0]
-        bot.answer_callback_query(call.id,"You Chose "+msg)
-        get_add_info(message,msg)
-    elif call.data == dept_title[1]:
-        msg = dept_title[1]
-        bot.answer_callback_query(call.id,"You Chose "+msg)
-        get_add_info(message,msg)
-    elif call.data == dept_title[2]:
-        msg = dept_title[2]
-        bot.answer_callback_query(call.id,"You Chose "+msg)
-        get_add_info(message,msg)
-    elif call.data == dept_title[3]:
-        msg = dept_title[3]
-        bot.answer_callback_query(call.id,"You Chose "+msg)
-        get_add_info(message,msg)
-    elif call.data == dept_title[4]:
-        msg = dept_title[4]
-        bot.answer_callback_query(call.id,"You Chose "+msg)
-        get_add_info(message,msg)
+    for i in range(len(dept_title)):
+        if call.data == dept_title[i]:
+            msg = dept_title[i]
+            bot.answer_callback_query(call.id,"You Chose "+msg)
+            get_add_info(message,msg)
 
