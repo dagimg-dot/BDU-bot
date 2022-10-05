@@ -1,9 +1,8 @@
-from telebot import TeleBot
-from telebot.types import Message
+from bot import bot
 from util.keyboard_buttons import buttons
-from util.validate_login import buttons_clicked
+from util.useful_lists import buttons_clicked
 
-def back_button_handler(message: Message, bot: TeleBot):
+def back_button_handler(message):
     length = len(buttons_clicked)
     if length != 1:
         for i in buttons_clicked[:length-1]:
