@@ -1,4 +1,3 @@
-from telebot import TeleBot
 from handlers.commands_user import start_message,help_message,menu_handler
 from handlers.messages_user import main_messages
 from bot import bot
