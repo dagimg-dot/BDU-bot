@@ -60,7 +60,7 @@ def wrong_cred_handler(message, c_login,page_to_scrape):
         bot.send_message(message.chat.id, msg)
         login(message)
     else:
-        util.validate.login.master_check = True
+        util.validate_login.master_check = True
         name = page_to_scrape.find_element(
             By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
         msg = "Login Successful !!\nLogged in as: "+name
