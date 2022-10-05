@@ -10,6 +10,9 @@ Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
 
 buttons_clicked = []
 
+master_check = ['0']
+
+
 cardinal_ordinal = {
     1: 'first',
     2: 'second',
