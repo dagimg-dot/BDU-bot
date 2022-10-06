@@ -10,14 +10,7 @@ Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
 
 Grades = ['A+','a+','A','a','A-','a-','B+','b+','B','b','B-','b-','C+','c+','C','c','C-','c-','D','d','F','f']
 
-buttons_clicked = []
-
 master_check = ['0']
-
-length = len(master_check)
-if length != 1:
-    for i in master_check[:length-1]:
-        master_check.remove(i)
 
 cardinal_ordinal = {
     1: 'first',
