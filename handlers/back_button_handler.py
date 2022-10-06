@@ -1,14 +1,27 @@
 from bot import bot
 from util.keyboard_buttons import buttons
-from util.useful_lists import buttons_clicked
+from telebot import types
+from util.useful_lists import master_check
 
-def back_button_handler(message):
-    length = len(buttons_clicked)
-    if length != 1:
-        for i in buttons_clicked[:length-1]:
-            buttons_clicked.remove(i)
-    if buttons_clicked[0] == "My Courses" or buttons_clicked[0] == "My Status":
-        bot.send_message(message.from_user.id, "Back",
-                         reply_markup=buttons())
-        # bot.delete_message(message.chat.id,message.message_id)
-        
+
+def still_loggedin_checker(message):
+    markup = types.InlineKeyboardMarkup()
+    yes_btn = types.InlineKeyboardButton('Yes', callback_data="Yes")
+    no_btn = types.InlineKeyboardButton('No', callback_data="No")
+    markup.add(yes_btn, no_btn)
+    bot.send_message(message.chat.id, 'You are still Logged in. Do you want to log out ?', reply_markup=markup)
+
+@bot.callback_query_handler(func=lambda call:True)
+def user_answer_dept(call):
+    message = call.message
+    if call.data == "Yes":
+        # page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
+        msg = "You are logged out !!"
+        master_check[0] = '0'
+        bot.answer_callback_query(call.id,msg)
+        bot.send_message(message.chat.id, msg, reply_markup=buttons("Menu"))
+        # bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
+    elif call.data == "No":
+        bot.answer_callback_query(call.id,"Logging out Cancelled")
+        # bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
+        # bot.send_message(message.chat.id, "Logging out Cancelled")
