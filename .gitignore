@@ -1,9 +1,9 @@
 
 Token.txt
 __pycache__
-functionalities\__pycache__
-functionalities\GPA_Prediction\__pycache__
-functionalities\SIMS\__pycache__
-handlers\__pycache__
-util\__pycache__
+functionalities\__pycache__\*
+functionalities\GPA_Prediction\__pycache__\*
+functionalities\SIMS\__pycache__\*
+handlers\__pycache__\*
+util\__pycache__\*
 *.exe
