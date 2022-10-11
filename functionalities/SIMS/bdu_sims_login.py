@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from util.initiate_webdriver import initiate_driver
 from selenium.common.exceptions import NoSuchElementException
 from util.keyboard_buttons import buttons
+from util.message_cleaner import cleaner
 from util.useful_lists import master_check
 count = 0
 
@@ -37,7 +38,7 @@ def login(message):
 
 def username_handler(message,sent_msgU):
     username = message.text
-    bot.delete_message(message.chat.id,message.message_id)
+    cleaner(message)
     sent_msgP = "Now, Enter your password"
     bot.edit_message_text(sent_msgP,sent_msgU.chat.id,sent_msgU.message_id)
     bot.register_next_step_handler(sent_msgU,password_handler, username,sent_msgU)
@@ -45,7 +46,7 @@ def username_handler(message,sent_msgU):
 
 def password_handler(message,username,sent_msgU):
     password = message.text
-    bot.delete_message(message.chat.id,message.message_id)
+    cleaner(message)
     auth =  "Authenticating . . ."
     bot.edit_message_text(auth,sent_msgU.chat.id,sent_msgU.message_id)
     login_validator(message,username,password,sent_msgU)
@@ -74,11 +75,11 @@ def wrong_cred_handler(message, c_login,sent_msgU):
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
         bot.edit_message_text(msg,sent_msgU.chat.id,sent_msgU.message_id)
         time.sleep(3)
-        bot.delete_message(sent_msgU.chat.id,sent_msgU.message_id)
+        cleaner(sent_msgU)
         login(message)
     else:
         count = 0
-        bot.delete_message(sent_msgU.chat.id,sent_msgU.message_id)
+        cleaner(sent_msgU)
         master_check[0] = '1'
         name = page_to_scrape.find_element(
             By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
