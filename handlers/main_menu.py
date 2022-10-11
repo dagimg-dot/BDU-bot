@@ -4,7 +4,7 @@ from util.useful_lists import *
 from util.keyboard_buttons import buttons
 from functionalities.SIMS.bdu_sims_login import login
 from functionalities.GPA_Prediction.gpa_prediction_menu import predict_gpa
-from handlers.functionalities_menu import functionalities_menu_messages
+from handlers.login_functionalities_menu import functionalities_menu_messages
 
 
 def main_menu_messages(message: Message, bot: TeleBot):
