@@ -143,6 +143,4 @@ def grade_validator(message,msg,course_title,credit):
                             for k, v in course_grade.items())
         bot.send_message(message.chat.id, full_str)
         gpa_calculator(message,credit,splitted_upper)
-    # full_str = '\n'.join([str(i) for i in splitted_grades])
-    # bot.send_message(message.chat.id,full_str)
  
