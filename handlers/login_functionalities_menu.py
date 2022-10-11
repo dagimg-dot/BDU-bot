@@ -32,22 +32,22 @@ def functionalities_menu_messages(message):
             msg = bot.send_message(message.from_user.id, "Enter year",
                                 reply_markup=buttons("my_courses"))
             choice = 'y'
-            bot.register_next_step_handler(msg, course_year_handler, choice,web)
+            bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
         elif message.text == MyC[2]: # Courses given on a specific semester
             msg = bot.send_message(message.from_user.id, "Enter year",
                                 reply_markup=buttons("my_courses"))
             choice = 's'
-            bot.register_next_step_handler(msg, course_year_handler, choice,web)
+            bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
         elif message.text == MyS[0]: # Cumulative GPA - CGPA
             current_cgpa(message,web)
         elif message.text == MyS[1]: # Semester GPA - SGPA
             msg = bot.send_message(message.from_user.id, "Enter year",
                                 reply_markup=buttons("my_status"))
-            bot.register_next_step_handler(msg, status_year_handler,web)
+            bot.register_next_step_handler(msg, status_year_handler,web,msg)
         elif message.text == MyS[2]: # Semester Grades
             msg = bot.send_message(message.from_user.id, "Enter year",
                                 reply_markup=buttons("my_status"))
-            bot.register_next_step_handler(msg, sgrade_year_handler,web)
+            bot.register_next_step_handler(msg, sgrade_year_handler,web,msg)
         elif message.text == "Back":
             bot.send_message(message.from_user.id, "Back",reply_markup=buttons("s_login"))
         elif message.text == "Back to Menu":
