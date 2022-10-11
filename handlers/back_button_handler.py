@@ -11,17 +11,17 @@ def still_loggedin_checker(message):
     markup.add(yes_btn, no_btn)
     bot.send_message(message.chat.id, 'You are still Logged in. Do you want to log out ?', reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda call:True)
-def user_answer_dept(call):
-    message = call.message
-    if call.data == "Yes":
+@bot.callback_query_handler(lambda query: query.data in ["Yes","No"])
+def user_answer_logout(query):
+    message = query.message
+    if query.data == "Yes":
         # page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
         msg = "You are logged out !!"
         master_check[0] = '0'
-        bot.answer_callback_query(call.id,msg)
+        bot.answer_callback_query(query.id,msg)
         bot.send_message(message.chat.id, msg, reply_markup=buttons("Menu"))
         # bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
-    elif call.data == "No":
-        bot.answer_callback_query(call.id,"Logging out Cancelled")
+    elif query.data == "No":
+        bot.answer_callback_query(query.id,"Logging out Cancelled")
         # bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
         # bot.send_message(message.chat.id, "Logging out Cancelled")
