@@ -10,7 +10,7 @@ Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
 
 Grades = ['A+','a+','A','a','A-','a-','B+','b+','B','b','B-','b-','C+','c+','C','c','C-','c-','D','d','F','f']
 
-master_check = ['0']
+master_check = ['1']
 
 cardinal_ordinal = {
     1: 'first',
