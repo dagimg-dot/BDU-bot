@@ -20,7 +20,6 @@ def still_loggedin_checker(message,web):
 def user_answer_logout(query):
     message = query.message
     if query.data == "Yes":
-        # page_to_scrape.find_element(By.ID, "dnn_dnnLOGIN_cmdLogin").click()
         page_to_scrape.close()
         msg = "You are logged out !!"
         master_check[0] = '0'
@@ -28,10 +27,7 @@ def user_answer_logout(query):
         cleaner(sent_msg)
         cleaner(back)
         bot.send_message(message.chat.id, msg, reply_markup=buttons("Menu"))
-        # bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
     elif query.data == "No":
         bot.answer_callback_query(query.id,"Logging out Cancelled")
         cleaner(sent_msg)
         cleaner(back)
-        # bot.edit_message_reply_markup(message.chat.id,message.message_id,reply_markup=None)
-        # bot.send_message(message.chat.id, "Logging out Cancelled")
