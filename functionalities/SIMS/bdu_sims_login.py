@@ -14,26 +14,26 @@ def driver_transfer():
     return page_to_scrape
 
 def login(message):
-    global page_to_scrape
-    page_to_scrape = initiate_driver()
-    page_to_scrape.get(url)
-    master_check[0] = '1'
-    # if count == 0:
-    #     global page_to_scrape
-    #     page_to_scrape = initiate_driver()
-    #     try:
-    #         page_to_scrape.get(url)
-    #     except Exception:
-    #         bot.send_message(message.chat.id,"Connection to the server timed out, plesase try again later")
-    #         page_to_scrape.close()
-    # try:
-    #     page_to_scrape. find_element(
-    #         By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
-    #     sent_msgU = bot.send_message(message.chat.id, "Enter your username")
-    #     bot.register_next_step_handler(sent_msgU, username_handler,sent_msgU)
-    # except NoSuchElementException:
-    #     bot.send_message(message.chat.id,"The website is under maintenance, please check back later")
-    #     page_to_scrape.close()
+    # global page_to_scrape
+    # page_to_scrape = initiate_driver()
+    # page_to_scrape.get(url)
+    # master_check[0] = '1'
+    if count == 0:
+        global page_to_scrape
+        page_to_scrape = initiate_driver()
+        try:
+            page_to_scrape.get(url)
+        except Exception:
+            bot.send_message(message.chat.id,"Connection to the server timed out, plesase try again later")
+            page_to_scrape.close()
+    try:
+        page_to_scrape. find_element(
+            By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
+        sent_msgU = bot.send_message(message.chat.id, "Enter your username")
+        bot.register_next_step_handler(sent_msgU, username_handler,sent_msgU)
+    except NoSuchElementException:
+        bot.send_message(message.chat.id,"The website is under maintenance, please check back later")
+        page_to_scrape.close()
 
 
 def username_handler(message,sent_msgU):

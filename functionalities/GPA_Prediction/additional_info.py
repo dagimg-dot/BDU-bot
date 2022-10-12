@@ -8,6 +8,7 @@ import re
 
 
 def get_add_info(message,msg):
+    
     if msg == dept_title[0]:
         year = "1"
         sent_msg = bot.send_message(message.chat.id,"Enter semester")
