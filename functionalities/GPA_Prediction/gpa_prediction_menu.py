@@ -1,6 +1,7 @@
 from bot import bot
 from telebot import types
 from functionalities.GPA_Prediction.additional_info import get_add_info
+from util.message_cleaner import cleaner
 from util.useful_lists import dept_title
 
 
@@ -9,7 +10,8 @@ def predict_gpa(message):
     markup.row_width = 1
     dept_buttons = [types.InlineKeyboardButton(x,callback_data=x) for x in dept_title]
     markup.add(*dept_buttons)
-    bot.send_message(message.chat.id, 'Choose Department',reply_markup=markup)
+    global sent_msg 
+    sent_msg = bot.send_message(message.chat.id, 'Choose Department',reply_markup=markup)
 
 @bot.callback_query_handler(lambda query: query.data in dept_title)
 def user_answer_dept(query):
@@ -18,5 +20,6 @@ def user_answer_dept(query):
         if query.data == dept_title[i]:
             msg = dept_title[i]
             bot.answer_callback_query(query.id,"You Chose "+msg)
+            cleaner(sent_msg)
             get_add_info(message,msg)
 

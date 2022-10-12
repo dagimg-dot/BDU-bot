@@ -51,6 +51,6 @@ def functionalities_menu_messages(message):
         elif message.text == "Back":
             bot.send_message(message.from_user.id, "Back",reply_markup=buttons("s_login"))
         elif message.text == "Back to Menu":
-            still_loggedin_checker(message)
+            still_loggedin_checker(message,web)
     else:
         bot.send_message(message.from_user.id, "You are not logged in yet, press the login button to login")
