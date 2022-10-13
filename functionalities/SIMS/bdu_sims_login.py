@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
 from util.useful_lists import master_check
-count = 0
+is_open = False
 
 def driver_transfer():
     global page_to_scrape
@@ -18,7 +18,7 @@ def login(message):
     # page_to_scrape = initiate_driver()
     # page_to_scrape.get(url)
     # master_check[0] = '1'
-    if count == 0:
+    if is_open == False:
         global page_to_scrape
         page_to_scrape = initiate_driver()
         try:
@@ -68,17 +68,17 @@ def login_validator(message, usr, passd,sent_msgU):
 
 
 def wrong_cred_handler(message, c_login,sent_msgU):
-    global count
+    global is_open
     if (c_login != "People Online:"):
         # page_to_scrape.close()
-        count+=1
+        is_open = True
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
         bot.edit_message_text(msg,sent_msgU.chat.id,sent_msgU.message_id)
         time.sleep(3)
         cleaner(sent_msgU)
         login(message)
     else:
-        count = 0
+        is_open = False
         cleaner(sent_msgU)
         master_check[0] = '1'
         name = page_to_scrape.find_element(
