@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import OP
 from functionalities.SIMS.bdu_sims_login import driver_transfer
 from util.message_cleaner import cleaner
 from util.state_holder import state_changer
@@ -7,7 +6,7 @@ from util.keyboard_buttons import buttons
 from handlers.back_button_handler import still_loggedin_checker
 from functionalities.SIMS.MyGrades import My_Grades
 from functionalities.SIMS.MyCourses import All_Courses,course_year_handler
-from functionalities.SIMS.MyStatus import current_cgpa,status_year_handler,sgrade_year_handler
+from functionalities.SIMS.MyStatus import current_cgpa,sgpa_year_handler,sgrade_year_handler
 from bot import bot
 
 def functionalities_menu_messages(message):
@@ -48,7 +47,7 @@ def functionalities_menu_messages(message):
         elif message.text == MyS[1]: # Semester GPA - SGPA
             msg = bot.send_message(message.from_user.id, "Enter year")
             state_changer(success_login[1])
-            bot.register_next_step_handler(msg, status_year_handler,web,msg)
+            bot.register_next_step_handler(msg, sgpa_year_handler,web,msg)
         elif message.text == MyS[2]: # Semester Grades
             msg = bot.send_message(message.from_user.id, "Enter year")
             state_changer(MyS[2])
