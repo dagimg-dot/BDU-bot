@@ -2,12 +2,14 @@ from bot import bot
 from selenium.webdriver.common.by import By
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
+from util.useful_lists import OpenWeb,success_login
 
 
 def My_Grades(message,sent_msg,web):
     try:
-        web.find_element(
-            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
+        if OpenWeb[success_login[2]] == 1:
+            web.find_element(
+                By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
 
         courseTitle = web.find_elements(
             By.XPATH, "//div[1]/table/tbody/tr/td[2]/div")

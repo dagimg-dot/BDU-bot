@@ -2,14 +2,16 @@ from bot import bot
 from selenium.webdriver.common.by import By
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
-from util.useful_lists import cardinal_ordinal
+from util.useful_lists import cardinal_ordinal,OpenWeb,success_login
 import time
 
 
 def current_cgpa(message,web):
     try:
-        web.find_element(
-            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+        if OpenWeb[success_login[1]] == 1:
+            web.find_element(
+                By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+
         cgpa = web.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[11]/div/div[1]")
         year_status = web.find_elements(
@@ -33,26 +35,28 @@ def current_cgpa(message,web):
         bot.send_message(message.chat.id,"The database is being updated, please try again later")
 
 
-def status_year_handler(message,web,msg):
+def sgpa_year_handler(message,web,msg):
     year = message.text
     cleaner(message)
-    sent_msg = bot.send_message(message.chat.id, "Enter semester")
-    cleaner(msg)
-    bot.register_next_step_handler(sent_msg, status_semester_handler, year,web,sent_msg)
+    sent_msgS = "Enter semester"
+    bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
+    bot.register_next_step_handler(msg, sgpa_semester_handler, year,web,msg)
 
 
-def status_semester_handler(message, year,web,sent_msg):
+def sgpa_semester_handler(message, year,web,msg):
     semester = message.text
     cleaner(message)
     sent_msgC = "Checking availability . . ."
-    bot.edit_message_text(sent_msgC,sent_msg.chat.id,sent_msg.message_id)
-    status_validator(message, year, semester,web,sent_msg)
+    bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
+    sgpa_validator(message, year, semester,web,msg)
     
 
-def status_validator(message, year, semester,web,sent_msg):
+def sgpa_validator(message, year, semester,web,msg):
     try:
-        web.find_element(
-            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+        if OpenWeb[success_login[1]] == 1:
+            web.find_element(
+                By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+
         year_status = web.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
         sem_status = web.find_elements(
@@ -67,20 +71,20 @@ def status_validator(message, year, semester,web,sent_msg):
 
         if year.isdigit() == False or semester.isdigit() == False:
             sent_msgR = "Enter integers only. Please, Enter year again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, status_year_handler, web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgpa_year_handler, web,msg)
         elif int(year) > int(year_max) and int(semester) > 2:
             sent_msgR = "Both your entries are wrong. Please, Enter year again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, status_year_handler,web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgpa_year_handler,web,msg)
         elif int(year) > int(year_max):
             sent_msgR = "You didn't get there. Please, Enter year again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, status_year_handler,web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgpa_year_handler,web,msg)
         elif int(semester) > 2:
             sent_msgR = "There are only 2 semesters. Please, Enter semester again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, status_semester_handler, year,web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgpa_semester_handler, year,web,msg)
         else:
             for i in range(len(year_status)):
                 if year_status[i].text == year:
@@ -90,32 +94,32 @@ def status_validator(message, year, semester,web,sent_msg):
                 cardinal_ordinal[int(
                     year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
             bot.send_message(message.chat.id, full_str,reply_markup=buttons("my_status"))
-            cleaner(sent_msg)
+            cleaner(msg)
     except Exception:
         sent_msg_error = "The database is being updated, please try agian later"
         bot.send_message(message.chat.id, sent_msg_error,reply_markup=buttons("my_status"))
-        cleaner(sent_msg)
+        cleaner(msg)
 
 def sgrade_year_handler(message,web,msg):
     year = message.text
     cleaner(message)
-    sent_msg = bot.send_message(message.chat.id, "Enter semester")
-    cleaner(msg)
-    bot.register_next_step_handler(sent_msg, sgrade_semester_handler, year,web,sent_msg)
+    sent_msgS = "Enter semester"
+    bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
+    bot.register_next_step_handler(msg, sgrade_semester_handler, year,web,msg)
 
 
-def sgrade_semester_handler(message, year,web,sent_msg):
+def sgrade_semester_handler(message, year,web,msg):
     semester = message.text
     cleaner(message)
     sent_msgC = "Checking availability . . ."
-    bot.edit_message_text(sent_msgC,sent_msg.chat.id,sent_msg.message_id)
-    sgrade_validator(message, year, semester,web,sent_msg)
+    bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
+    sgrade_validator(message, year, semester,web,msg)
 
 
-def sgrade_validator(message, year, semester,web,sent_msg):
+def sgrade_validator(message, year, semester,web,msg):
     try:
         web.find_element(
-        By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+            By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
         year_status = web.find_elements(
         By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
         sem_status = web.find_elements(
@@ -128,20 +132,20 @@ def sgrade_validator(message, year, semester,web,sent_msg):
         year_max = max(years)
         if year.isdigit() == False or semester.isdigit() == False:
             sent_msgR = "Enter integers only. Please, Enter year again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, sgrade_year_handler, web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgrade_year_handler, web,msg)
         elif int(year) > int(year_max) and int(semester) > 2:
             sent_msgR = "Both your entries are wrong. Please, Enter year again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, sgrade_year_handler,web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgrade_year_handler,web,msg)
         elif int(year) > int(year_max):
             sent_msgR = "You didn't get there. Please, Enter year again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, sgrade_year_handler,web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgrade_year_handler,web,msg)
         elif int(semester) > 2:
             sent_msgR = "There are only 2 semesters. Please, Enter semester again"
-            bot.edit_message_text(sent_msgR,sent_msg.chat.id,sent_msg.message_id)
-            bot.register_next_step_handler(sent_msgR, status_semester_handler, year,web)
+            bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, sgrade_semester_handler, year,web,msg)
         else:
             grade_list = {}
             for i in range(len(year_status)):
@@ -166,14 +170,14 @@ def sgrade_validator(message, year, semester,web,sent_msg):
                         for i in range(j, len_title):
                             temp_data = {title[i].text: grade[i].text}
                             grade_list.update(temp_data)
-
+                        
             full_str = "\n".join("{}  {}".format(v, k)
                                     for k, v in grade_list.items())
             bot.send_message(message.chat.id, full_str,reply_markup=buttons("my_status"))
-            cleaner(sent_msg)
+            cleaner(msg)
             web.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
     except Exception:
         sent_msg_error = "The database is being updated, please try agian later"
         bot.send_message(message.chat.id, sent_msg_error,reply_markup=buttons("my_status"))
-        cleaner(sent_msg)
+        cleaner(msg)
