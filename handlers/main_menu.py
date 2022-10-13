@@ -1,7 +1,6 @@
 from telebot import TeleBot
 from telebot.types import Message
 from util.useful_lists import *
-from util.keyboard_buttons import buttons
 from functionalities.SIMS.bdu_sims_login import login
 from functionalities.GPA_Prediction.gpa_prediction_menu import predict_gpa
 from handlers.login_functionalities_menu import functionalities_menu_messages
