@@ -1,6 +1,6 @@
 from bot import bot
-from telebot import types
 import json
+from util.message_cleaner import cleaner
 from util.useful_lists import cardinal_ordinal,dept_title,data,Grades
 from functionalities.GPA_Prediction.gpa_calc import gpa_calculator
 from os import path
@@ -8,11 +8,10 @@ import re
 
 
 def get_add_info(message,msg):
-    
     if msg == dept_title[0]:
-        year = "1"
+        year = "1" # This is has no purpose
         sent_msg = bot.send_message(message.chat.id,"Enter semester")
-        bot.register_next_step_handler(sent_msg,semester_handler,year,msg)
+        bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)
     elif msg == dept_title[1]:
         with open('util\Courses\Pre-Engineering.json') as pre:
             pre_data = json.load(pre)
@@ -30,26 +29,33 @@ def get_add_info(message,msg):
         bot.register_next_step_handler(sent_msg,grade_validator,msg,course_title,credit)
     else:
         sent_msg = bot.send_message(message.chat.id,"Enter year")
-        bot.register_next_step_handler(sent_msg,year_handler,msg)
+        bot.register_next_step_handler(sent_msg,year_handler,msg,sent_msg)
 
-def year_handler(message,msg):
+def year_handler(message,msg,sent_msg):
     year = message.text
-    sent_msg = bot.send_message(message.chat.id,"Enter semester")
-    bot.register_next_step_handler(sent_msg,semester_handler,year,msg)
+    cleaner(message)
+    sent_msgS = "Enter semester"
+    bot.edit_message_text(sent_msgS,sent_msg.chat.id,sent_msg.message_id)
+    bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)
 
-def semester_handler(message,year,msg):
+def semester_handler(message,year,sent_msg,msg):
     semester = message.text
-    year_sem_validator(message,year,semester,msg)
+    cleaner(message)
+    sent_msgC = "Validating . . ."
+    bot.edit_message_text(sent_msgC,sent_msg.chat.id,sent_msg.message_id)
+    # cleaner(sent_msg)
+    year_sem_validator(message,year,semester,sent_msg,msg)
 
-def year_sem_validator(message,year,semester,msg):
+def year_sem_validator(message,year,semester,sent_msg,msg):
     if msg == dept_title[0]:
         if semester.isdigit() == False:
-            sent_msg = "Enter integers only"
-            bot.send_message(message.chat.id, sent_msg)
-            year_handler(message,msg)
+            sent_msgD = "Enter integers only, please enter semester again"
+            bot.edit_message_text(sent_msgD,sent_msg.chat.id,sent_msg.message_id)
+            bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)
         elif int(semester) > 2:
-            bot.send_message(message.chat.id,"There are only 2 semesters.")
-            year_handler(message,msg)
+            sent_msgD = "There are only 2 semesters, please enter semester again"
+            bot.edit_message_text(sent_msgD,sent_msg.chat.id,sent_msg.message_id)
+            bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)
         else:
             with open('util\Courses\Freshman.json') as fresh:
                 freshman_data = json.load(fresh)
@@ -61,33 +67,36 @@ def year_sem_validator(message,year,semester,msg):
                     course_title.append(freshman_data[i]['Course Title'])
                     credit.append(freshman_data[i]['Credit'])
 
+            intro = "These are the courses for Freshman year " + cardinal_ordinal[int(semester)] + " semester"
             full_str = '\n'.join([str(i) for i in course_title])
-            bot.send_message(message.chat.id,"These are the courses for Freshman year " + cardinal_ordinal[int(semester)] + " semester\n\n" + full_str)
+            full = intro +"\n\n" + full_str
+            bot.edit_message_text(full,sent_msg.chat.id,sent_msg.message_id)
 
-            sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
-            bot.register_next_step_handler(sent_msg,grade_validator,msg,course_title,credit)
+            grade_input(message,course_title,credit)
+
     else:
         for i in range(2,len(dept_title)):
             if msg == dept_title[i]:
                 if year.isdigit() == False or semester.isdigit() == False:
-                    sent_msg = "Enter integers only"
-                    bot.send_message(message.chat.id, sent_msg)
-                    get_add_info(message,msg)
+                    sent_msgD = "Enter integers only, please enter year again"
+                    bot.edit_message_text(sent_msgD,sent_msg.chat.id,sent_msg.message_id)
+                    bot.register_next_step_handler(sent_msg,year_handler,msg,sent_msg)
                 elif int(year) > data[i]['Total Year'] and int(semester) > 2:
-                    sent_msg = data[i]['Department Title'] + " is given in total of " + str(data[i]['Total Year']) + " years, and each year is divided into 2 semesters."
-                    bot.send_message(message.chat.id,sent_msg)
-                    get_add_info(message,msg)
+                    sent_msgYS = data[i]['Department Title'] + " is given in total of " + str(data[i]['Total Year']) + " years, and each year is divided into 2 semesters.\nPlease enter year again"
+                    bot.edit_message_text(sent_msgYS,sent_msg.chat.id,sent_msg.message_id)
+                    bot.register_next_step_handler(sent_msg,year_handler,msg,sent_msg)
                 elif int(year) > data[i]['Total Year']:
-                    sent_msg = data[i]['Department Title'] + " is given in total of " + str(data[i]['Total Year']) + " years."
-                    bot.send_message(message.chat.id,sent_msg)
-                    get_add_info(message,msg)
+                    sent_msgY = data[i]['Department Title'] + " is given in total of " + str(data[i]['Total Year']) + " years.\nPlease enter year again"
+                    bot.edit_message_text(sent_msgY,sent_msg.chat.id,sent_msg.message_id)
+                    bot.register_next_step_handler(sent_msg,year_handler,msg,sent_msg)
                 elif int(semester) > 2:
-                    bot.send_message(message.chat.id,"There are only 2 semesters.")
-                    year_handler(message,msg)
+                    sent_msgD = "There are only 2 semesters, please enter semester again"
+                    bot.edit_message_text(sent_msgD,sent_msg.chat.id,sent_msg.message_id)
+                    bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)     
                 else:
-                    dept_identifier(message,year,semester,msg)
+                    dept_identifier(message,year,semester,msg,sent_msg)
 
-def dept_identifier(message,year,semester,msg):
+def dept_identifier(message,year,semester,msg,sent_msg):
     for i in range(2,len(dept_title)):
             if msg == dept_title[i]:
                 start_path = 'util\Courses'
@@ -103,17 +112,28 @@ def dept_identifier(message,year,semester,msg):
                         course_title.append(course_data[i]['Course Title'])
                         credit.append(course_data[i]['Credit'])
                 
-                full_str = '\n'.join([str(i) for i in course_title])
-                bot.send_message(message.chat.id,"These are the courses for "+ cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester\n\n" + full_str)
-                grade_input(message,msg,course_title,credit)              
+                empty_list = "There are no courses given in " + cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester"
+                if len(course_title) == 0:
+                    bot.edit_message_text(empty_list,sent_msg.chat.id,sent_msg.message_id)
+                else:
+                    intro = "These are the courses for "+ cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester"
+                    full_str = '\n'.join([str(i) for i in course_title])
+                    full = intro +"\n\n" + full_str
+
+                    bot.edit_message_text(full,sent_msg.chat.id,sent_msg.message_id)
+
+                    grade_input(message,course_title,credit)              
 
 
-def grade_input(message,msg,course_title,credit):
-    sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
-    bot.register_next_step_handler(sent_msg,grade_validator,msg,course_title,credit)
+def grade_input(message,course_title,credit):
+    sent_msgG = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
+    bot.register_next_step_handler(sent_msgG,grade_validator,course_title,credit)
 
-def grade_validator(message,msg,course_title,credit):
+def grade_validator(message,course_title,credit):
+    sent_msgC = "Validating . . ."
+    sent_msg = bot.send_message(message.chat.id,sent_msgC)
     predicted_grades= message.text
+    # cleaner(message)
     splitted_grades = re.split(r'[,\s]',predicted_grades)
     for i in splitted_grades:
         for i in splitted_grades:
@@ -123,13 +143,13 @@ def grade_validator(message,msg,course_title,credit):
     check_invalid_grade = all(i in Grades for i in splitted_grades)
 
     if check_invalid_grade == False:
-        sent_msg = "An invalid grade is found from the grades you entered"
-        bot.send_message(message.chat.id,sent_msg)
-        grade_input(message,msg,course_title,credit)
+        sent_msgI = "An invalid grade is found from the grades you entered. Please enter them again"
+        bot.edit_message_text(sent_msgI,sent_msg.chat.id,sent_msg.message_id)
+        bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
     elif len(splitted_grades) != len(course_title):
-        sent_msg = "The grades you entered must be equal to the courses in the given semester"
-        bot.send_message(message.chat.id,sent_msg)
-        grade_input(message,msg,course_title,credit)
+        sent_msgN = "The grades you entered must be equal to the courses in the given semester. Please enter them again"
+        bot.edit_message_text(sent_msgN,sent_msg.chat.id,sent_msg.message_id)
+        bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
     else:
         splitted_upper = []
         for i in range(len(splitted_grades)):
@@ -142,6 +162,6 @@ def grade_validator(message,msg,course_title,credit):
 
         full_str = "\n".join("{}\t\t{}".format(v, k)
                             for k, v in course_grade.items())
-        bot.send_message(message.chat.id, full_str)
+        bot.edit_message_text(full_str,sent_msg.chat.id,sent_msg.message_id)
         gpa_calculator(message,credit,splitted_upper)
  
