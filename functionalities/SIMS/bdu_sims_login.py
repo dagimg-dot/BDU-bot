@@ -70,7 +70,6 @@ def login_validator(message, usr, passd,sent_msgU):
 def wrong_cred_handler(message, c_login,sent_msgU):
     global is_open
     if (c_login != "People Online:"):
-        # page_to_scrape.close()
         is_open = True
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
         bot.edit_message_text(msg,sent_msgU.chat.id,sent_msgU.message_id)
