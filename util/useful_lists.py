@@ -8,9 +8,20 @@ MyS = ["Cumulative GPA - CGPA", "Semester GPA - SGPA", "Semester Grades"]
 
 Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
 
+
+OpenWeb = {
+    "My Courses": 0,
+    "My Status": 0,
+    "My Grades": 0,
+    "Semester Grades": 0
+}
+# for i in range(len (Login_func)):
+#     temp_data = {Login_func[i]:'0'}
+#     OpenWeb.update(temp_data)
+
 Grades = ['A+','a+','A','a','A-','a-','B+','b+','B','b','B-','b-','C+','c+','C','c','C-','c-','D','d','F','f']
 
-master_check = ['1']
+master_check = ['0']
 
 cardinal_ordinal = {
     1: 'first',
