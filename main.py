@@ -1,6 +1,5 @@
 from handlers.commands_user import start_message,help_message,menu_handler
 from handlers.main_menu import main_menu_messages
-from util.useful_lists import *
 from bot import bot
 
 
