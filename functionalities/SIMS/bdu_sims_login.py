@@ -2,85 +2,76 @@ import time
 from config import url
 from bot import bot
 from selenium.webdriver.common.by import By
-from util.initiate_webdriver import initiate_driver
 from selenium.common.exceptions import NoSuchElementException
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
-from util.useful_lists import master_check
-is_open = False
+from util.user_database import users,User
 
-def driver_transfer():
-    global page_to_scrape
-    return page_to_scrape
 
 def login(message):
-    # global page_to_scrape
-    # page_to_scrape = initiate_driver()
-    # page_to_scrape.get(url)
-    # master_check[0] = '1'
-    if is_open == False:
-        global page_to_scrape
-        page_to_scrape = initiate_driver()
+    sent_msgW = bot.send_message(message.chat.id, "Please wait . . . ")
+    if users[message.from_user.id].is_driver_opened == False:
+        users[message.from_user.id].get_webdriver()
         try:
-            page_to_scrape.get(url)
+            users[message.from_user.id].driver.get(url)
         except Exception:
-            bot.send_message(message.chat.id,"Connection to the server timed out, plesase try again later")
-            page_to_scrape.close()
+            sent_msgE = "Connection to the server timed out, plesase try again later"
+            bot.edit_message_text(sent_msgE,sent_msgW.chat.id,sent_msgW.message_id)
+            users[message.from_user.id].driver.close()
     try:
-        page_to_scrape. find_element(
+        users[message.from_user.id].driver.find_element(
             By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
-        sent_msgU = bot.send_message(message.chat.id, "Enter your username")
-        bot.register_next_step_handler(sent_msgU, username_handler,sent_msgU)
+        sent_msgU = "Enter your username"
+        bot.edit_message_text(sent_msgU,sent_msgW.chat.id,sent_msgW.message_id)
+        bot.register_next_step_handler(sent_msgW, username_handler,sent_msgW)
     except NoSuchElementException:
         bot.send_message(message.chat.id,"The website is under maintenance, please check back later")
-        page_to_scrape.close()
+        users[message.from_user.id].driver.close()
 
 
-def username_handler(message,sent_msgU):
+def username_handler(message,sent_msgW):
     username = message.text
     cleaner(message)
     sent_msgP = "Now, Enter your password"
-    bot.edit_message_text(sent_msgP,sent_msgU.chat.id,sent_msgU.message_id)
-    bot.register_next_step_handler(sent_msgU,password_handler, username,sent_msgU)
+    bot.edit_message_text(sent_msgP,sent_msgW.chat.id,sent_msgW.message_id)
+    bot.register_next_step_handler(sent_msgW,password_handler, username,sent_msgW)
 
 
-def password_handler(message,username,sent_msgU):
+def password_handler(message,username,sent_msgW):
     password = message.text
     cleaner(message)
     auth =  "Authenticating . . ."
-    bot.edit_message_text(auth,sent_msgU.chat.id,sent_msgU.message_id)
-    login_validator(message,username,password,sent_msgU)
+    bot.edit_message_text(auth,sent_msgW.chat.id,sent_msgW.message_id)
+    login_validator(message,username,password,sent_msgW)
 
-def login_validator(message, usr, passd,sent_msgU):
+def login_validator(message, usr, passd,sent_msgW):
     
-    usrname = page_to_scrape.find_element(
+    usrname = users[message.from_user.id].driver.find_element(
         By.ID, "dnn_ctr_Login_Login_DNN_txtUsername")
-    passwd = page_to_scrape.find_element(
+    passwd = users[message.from_user.id].driver.find_element(
         By.ID, "dnn_ctr_Login_Login_DNN_txtPassword")
     usrname.send_keys(usr)
     passwd.send_keys(passd)
-    page_to_scrape.find_element(
+    users[message.from_user.id].driver.find_element(
         By.ID, "dnn_ctr_Login_Login_DNN_cmdLogin").click()
 
-    check_login = page_to_scrape.find_element(
+    check_login = users[message.from_user.id].driver.find_element(
         By.XPATH, "//div/table/tbody/tr/td[2]/span").text
-    wrong_cred_handler(message, check_login,sent_msgU)
+    wrong_cred_handler(message, check_login,sent_msgW)
 
 
-def wrong_cred_handler(message, c_login,sent_msgU):
-    global is_open
+def wrong_cred_handler(message, c_login,sent_msgW):
     if (c_login != "People Online:"):
-        is_open = True
+        users[message.from_user.id].is_driver_opened = True
         msg = "Login failed! Your Username or Password is incorrect, Please try again..."
-        bot.edit_message_text(msg,sent_msgU.chat.id,sent_msgU.message_id)
+        bot.edit_message_text(msg,sent_msgW.chat.id,sent_msgW.message_id)
         time.sleep(3)
-        cleaner(sent_msgU)
+        cleaner(sent_msgW)
         login(message)
     else:
-        is_open = False
-        cleaner(sent_msgU)
-        master_check[0] = '1'
-        name = page_to_scrape.find_element(
+        cleaner(sent_msgW)
+        users[message.from_user.id].is_logged_in = True
+        name = users[message.from_user.id].driver.find_element(
             By.XPATH, "//table[2]/tbody/tr/td[3]/a[1]").text
-        msg = "Login Successful !!\nLogged in as: "+name
+        msg = "Login Successful !!\nLogged in as: " + name
         bot.send_message(message.from_user.id, msg,reply_markup=buttons("s_login"))

@@ -1,10 +1,14 @@
-from util.useful_lists import OpenWeb
+# from util.useful_lists import OpenWeb
+from util.user_database import users
 
-
-def state_changer(page):
-    for key,value in OpenWeb.items():
+def state_changer(message,page):
+    for key,value in users[message.from_user.id].get_state().items():
         if key == page:
-            OpenWeb[page] += 1
+            users[message.from_user.id].set_state(key,True)
         else:
-            OpenWeb[key] = 0
+            users[message.from_user.id].set_state(key,False)
 
+
+def state_reset(message):
+    for key,value in users[message.from_user.id].get_state().items():
+        users[message.from_user.id].set_state(key,False)

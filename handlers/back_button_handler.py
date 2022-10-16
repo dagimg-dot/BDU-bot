@@ -2,13 +2,13 @@ from bot import bot
 from util.keyboard_buttons import buttons
 from telebot import types
 from util.message_cleaner import cleaner
-from util.useful_lists import master_check
+from util.state_holder import state_reset
+from util.user_database import users
 
 
-def still_loggedin_checker(message,web):
-    global back , page_to_scrape
+def still_loggedin_checker(message):
+    global back 
     back = message
-    page_to_scrape = web
     markup = types.InlineKeyboardMarkup()
     yes_btn = types.InlineKeyboardButton('Yes', callback_data="Yes")
     no_btn = types.InlineKeyboardButton('No', callback_data="No")
@@ -20,9 +20,11 @@ def still_loggedin_checker(message,web):
 def user_answer_logout(query):
     message = query.message
     if query.data == "Yes":
-        page_to_scrape.close()
+        users[back.from_user.id].driver.close()
         msg = "You are logged out !!"
-        master_check[0] = '0'
+        users[back.from_user.id].is_logged_in = False
+        users[back.from_user.id].is_driver_opened = False
+        state_reset(back)
         bot.answer_callback_query(query.id,msg)
         cleaner(sent_msg)
         cleaner(back)

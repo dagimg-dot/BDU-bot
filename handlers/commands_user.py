@@ -3,12 +3,26 @@ from telebot import TeleBot
 from telebot.types import Message
 from telebot import formatting
 from util.keyboard_buttons import buttons
-
+from util.user_database import collection,users,User
+from util.user_database import users,User
 
 # For '/start' command
 def start_message(message: Message, bot: TeleBot):
-    bot.send_message(
-        message.chat.id, f"Hello {message.from_user.first_name}. This is BDU-SIMS Bot. It brings you the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help (recommended)")
+    user_id = message.from_user.id
+    f_name = message.from_user.first_name
+    NewUser = User(user_id,f_name)
+    temp_user={user_id:NewUser}
+    users.update(temp_user)
+    u_id = collection.find_one({"_id":user_id})
+    if u_id == None:
+        NewUserDB = {"_id":user_id,"f_name":f_name}
+        collection.insert_one(NewUserDB)
+        start_new = f"Hello {f_name}. Welcome to BDU-SIMS Bot. It brings you the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help (recommended)"
+        bot.send_message(user_id,start_new)
+        print(users[user_id].first_name)
+    else:
+        start_old = f"Welcome back {f_name}. This is BDU-SIMS Bot. It brings you the Online Student Infomation of Bahir Dar University to telegram. Enjoy !!! \n\nTo start using the bot /menu \nTo see what it's capable of refer /help (recommended)"
+        bot.send_message(user_id,start_old)
 
 
 # For '/help' command
