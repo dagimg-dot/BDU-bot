@@ -17,10 +17,10 @@ class User:
         self.is_logged_in = False
         self.is_driver_opened = False
         self.OpenWeb = {
-            "My Courses": False,
-            "My Status": False,
-            "My Grades": False,
-            "Semester Grades": False
+            "My Courses": 0,
+            "My Status": 0,
+            "My Grades": 0,
+            "Semester Grades": 0
         }
 
     def get_webdriver(self):
