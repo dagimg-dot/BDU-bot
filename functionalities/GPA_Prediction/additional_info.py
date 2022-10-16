@@ -26,7 +26,7 @@ def get_add_info(message,msg):
         bot.send_message(message.chat.id,"These are the courses for Pre - Engineering \n\n" + full_str)
 
         sent_msg = bot.send_message(message.chat.id,"Please enter the grades for each course separated by comma or whitespaces")
-        bot.register_next_step_handler(sent_msg,grade_validator,msg,course_title,credit)
+        bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
     else:
         sent_msg = bot.send_message(message.chat.id,"Enter year")
         bot.register_next_step_handler(sent_msg,year_handler,msg,sent_msg)
@@ -160,7 +160,7 @@ def grade_validator(message,course_title,credit):
             temp_data = {course_title[i]: splitted_upper[i]}
             course_grade.update(temp_data)
 
-        full_str = "\n".join("{}\t\t{}".format(v, k)
+        full_str = "\n".join("{0}  {1}".format(v, k)
                             for k, v in course_grade.items())
         bot.edit_message_text(full_str,sent_msg.chat.id,sent_msg.message_id)
         gpa_calculator(message,credit,splitted_upper)
