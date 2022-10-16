@@ -2,19 +2,22 @@ from bot import bot
 from selenium.webdriver.common.by import By
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
-from util.useful_lists import cardinal_ordinal,OpenWeb,success_login
+from util.useful_lists import cardinal_ordinal,success_login
+from util.user_database import users
 
-def All_Courses(message,sent_msg,web):
+def All_Courses(message,sent_msg):
     try:
-        if OpenWeb[success_login[0]] == 1:
-            web.find_element(
+        if users[message.from_user.id].get_state()[success_login[0]] == 1:
+            users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
 
-        courseTitle = web.find_elements(
+        users[message.from_user.id].set_state(success_login[0],False)
+
+        courseTitle = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
-        credit_hour = web.find_elements(
+        credit_hour = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-        dept = web.find_elements(
+        dept = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//option")
 
         course_list = {}
@@ -34,7 +37,7 @@ def All_Courses(message,sent_msg,web):
         bot.send_message(message.chat.id,sent_msg_error,reply_markup=buttons("my_courses"))
         cleaner(sent_msg)
 
-def course_year_handler(message, choice,web,msg):
+def course_year_handler(message, choice,msg):
 
     year = message.text
     cleaner(message)
@@ -42,36 +45,36 @@ def course_year_handler(message, choice,web,msg):
         semester = 0
         sent_msgC = "Checking availability . . ."
         bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
-        course_validator(message, year, semester, choice,web,msg)
+        course_validator(message, year, semester, choice,msg)
     elif choice == 's':
         sent_msgS ="Enter Semester"
         bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
-        bot.register_next_step_handler(msg, course_semester_handler, year, choice,web,msg)
+        bot.register_next_step_handler(msg, course_semester_handler, year, choice,msg)
 
 
-def course_semester_handler(message, year, choice,web,msg):
+def course_semester_handler(message, year, choice,msg):
     semester = message.text
     cleaner(message)
     sent_msgC = "Checking availability . . ."
     bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
-    course_validator(message, year, semester, choice,web,msg)
+    course_validator(message, year, semester, choice,msg)
 
 
-def course_validator(message, year, semester, choice,web,msg):
+def course_validator(message, year, semester, choice,msg):
     try:
-        if OpenWeb[success_login[0]] == 1:
-            web.find_element(
+        if users[message.from_user.id].get_state()[success_login[0]] == 1:
+            users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
 
-        courseTitle = web.find_elements(
+        courseTitle = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
-        credit_hour = web.find_elements(
+        credit_hour = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
-        year1 = web.find_elements(
+        year1 = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[5]/div/div[1]")
-        sem1 = web.find_elements(
+        sem1 = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[6]/div/div[1]")
-        dept = web.find_elements(
+        dept = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//option")
 
         years = []
@@ -83,11 +86,11 @@ def course_validator(message, year, semester, choice,web,msg):
             if year.isdigit() == False:
                 sent_msgR = "Enter integers only. Please, Enter year again"
                 bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
-                bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
+                bot.register_next_step_handler(msg, course_year_handler, choice,msg)
             elif int(year) > int(year_max):
                 sent_msgR = dept[0].text+" is given in total of "+year_max+" years."+"\n"+"Please, Enter year again"
                 bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
-                bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
+                bot.register_next_step_handler(msg, course_year_handler, choice,msg)
             else:
                 course_list = {}
                 for i in range(len(courseTitle)):
@@ -107,19 +110,19 @@ def course_validator(message, year, semester, choice,web,msg):
             if year.isdigit() == False or semester.isdigit() == False:
                 sent_msgR = "Enter integers only. Please, Enter year again"
                 bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
-                bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
+                bot.register_next_step_handler(msg, course_year_handler, choice,msg)
             elif int(year) > int(year_max) and int(semester) > 2:
                 sent_msgR = "Both your entries are wrong. Please, Enter year again"
                 bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
-                bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
+                bot.register_next_step_handler(msg, course_year_handler, choice,msg)
             elif int(year) > int(year_max):
                 sent_msgR = dept[0].text+" is given in total of "+year_max+" years."+"\n"+"Please, Enter year again"
                 bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
-                bot.register_next_step_handler(msg, course_year_handler, choice,web,msg)
+                bot.register_next_step_handler(msg, course_year_handler, choice,msg)
             elif int(semester) > 2:
                 sent_msgR = "There are only 2 semesters. Please, Enter semester again"
                 bot.edit_message_text(sent_msgR,msg.chat.id,msg.message_id)
-                bot.register_next_step_handler(msg, course_semester_handler, year, choice,web,msg)
+                bot.register_next_step_handler(msg, course_semester_handler, year, choice,msg)
             else:
                 course_list = {}
                 for i in range(len(courseTitle)):

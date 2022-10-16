@@ -7,7 +7,7 @@ from util.user_database import users,User
 
 def My_Grades(message,sent_msg):
     # try:
-        if users[message.from_user.id].get_state()[success_login[2]] == True:
+        if users[message.from_user.id].get_state()[success_login[2]] == 1:
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt63").click()
 
