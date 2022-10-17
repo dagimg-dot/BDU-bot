@@ -56,7 +56,5 @@ def functionalities_menu_messages(message):
             cleaner(message)
         elif message.text == "Back to Menu":
             still_loggedin_checker(message)
-    elif message.text == "x":
-        bot.send_message(message.from_user.id, "❌Request to the server cancelled by the user❌")
     else:
         bot.send_message(message.from_user.id, "You are not logged in yet, press the login button to login")
