@@ -1,5 +1,6 @@
 from bot import bot
 from selenium.webdriver.common.by import By
+from util.interrupter import step_canceler
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
 from util.useful_lists import cardinal_ordinal,success_login
@@ -38,26 +39,31 @@ def All_Courses(message,sent_msg):
         cleaner(sent_msg)
 
 def course_year_handler(message, choice,msg):
-
-    year = message.text
-    cleaner(message)
-    if choice == 'y':
-        semester = 0
-        sent_msgC = "Checking availability . . ."
-        bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
-        course_validator(message, year, semester, choice,msg)
-    elif choice == 's':
-        sent_msgS ="Enter Semester"
-        bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
-        bot.register_next_step_handler(msg, course_semester_handler, year, choice,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        year = message.text
+        cleaner(message)
+        if choice == 'y':
+            semester = 0
+            sent_msgC = "Checking availability . . ."
+            bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
+            course_validator(message, year, semester, choice,msg)
+        elif choice == 's':
+            sent_msgS ="Enter Semester"
+            bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
+            bot.register_next_step_handler(msg, course_semester_handler, year, choice,msg)
 
 
 def course_semester_handler(message, year, choice,msg):
-    semester = message.text
-    cleaner(message)
-    sent_msgC = "Checking availability . . ."
-    bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
-    course_validator(message, year, semester, choice,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        semester = message.text
+        cleaner(message)
+        sent_msgC = "Checking availability . . ."
+        bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
+        course_validator(message, year, semester, choice,msg)
 
 
 def course_validator(message, year, semester, choice,msg):

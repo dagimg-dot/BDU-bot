@@ -1,5 +1,6 @@
 from bot import bot
 import json
+from util.interrupter import step_canceler
 from util.message_cleaner import cleaner
 from util.useful_lists import cardinal_ordinal,dept_title,data,Grades
 from functionalities.GPA_Prediction.gpa_calc import gpa_calculator
@@ -32,19 +33,25 @@ def get_add_info(message,msg):
         bot.register_next_step_handler(sent_msg,year_handler,msg,sent_msg)
 
 def year_handler(message,msg,sent_msg):
-    year = message.text
-    cleaner(message)
-    sent_msgS = "Enter semester"
-    bot.edit_message_text(sent_msgS,sent_msg.chat.id,sent_msg.message_id)
-    bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)
-
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        year = message.text
+        cleaner(message)
+        sent_msgS = "Enter semester"
+        bot.edit_message_text(sent_msgS,sent_msg.chat.id,sent_msg.message_id)
+        bot.register_next_step_handler(sent_msg,semester_handler,year,sent_msg,msg)
+        
 def semester_handler(message,year,sent_msg,msg):
-    semester = message.text
-    cleaner(message)
-    sent_msgC = "Validating . . ."
-    bot.edit_message_text(sent_msgC,sent_msg.chat.id,sent_msg.message_id)
-    # cleaner(sent_msg)
-    year_sem_validator(message,year,semester,sent_msg,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        semester = message.text
+        cleaner(message)
+        sent_msgC = "Validating . . ."
+        bot.edit_message_text(sent_msgC,sent_msg.chat.id,sent_msg.message_id)
+        # cleaner(sent_msg)
+        year_sem_validator(message,year,semester,sent_msg,msg)
 
 def year_sem_validator(message,year,semester,sent_msg,msg):
     if msg == dept_title[0]:
@@ -130,38 +137,41 @@ def grade_input(message,course_title,credit):
     bot.register_next_step_handler(sent_msgG,grade_validator,course_title,credit)
 
 def grade_validator(message,course_title,credit):
-    sent_msgC = "Validating . . ."
-    sent_msg = bot.send_message(message.chat.id,sent_msgC)
-    predicted_grades= message.text
-    # cleaner(message)
-    splitted_grades = re.split(r'[,\s]',predicted_grades)
-    for i in splitted_grades:
-        for i in splitted_grades:
-            if i == '':
-                splitted_grades.remove(i)
-
-    check_invalid_grade = all(i in Grades for i in splitted_grades)
-
-    if check_invalid_grade == False:
-        sent_msgI = "An invalid grade is found from the grades you entered. Please enter them again"
-        bot.edit_message_text(sent_msgI,sent_msg.chat.id,sent_msg.message_id)
-        bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
-    elif len(splitted_grades) != len(course_title):
-        sent_msgN = "The grades you entered must be equal to the courses in the given semester. Please enter them again"
-        bot.edit_message_text(sent_msgN,sent_msg.chat.id,sent_msg.message_id)
-        bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
+    if message.text == '/x':
+        step_canceler(message)
     else:
-        splitted_upper = []
-        for i in range(len(splitted_grades)):
-            splitted_upper.append(splitted_grades[i].upper())
+        sent_msgC = "Validating . . ."
+        sent_msg = bot.send_message(message.chat.id,sent_msgC)
+        predicted_grades= message.text
+        # cleaner(message)
+        splitted_grades = re.split(r'[,\s]',predicted_grades)
+        for i in splitted_grades:
+            for i in splitted_grades:
+                if i == '':
+                    splitted_grades.remove(i)
 
-        course_grade = {}
-        for i in range(len(course_title)):
-            temp_data = {course_title[i]: splitted_upper[i]}
-            course_grade.update(temp_data)
+        check_invalid_grade = all(i in Grades for i in splitted_grades)
 
-        full_str = "\n".join("{0}  {1}".format(v, k)
-                            for k, v in course_grade.items())
-        bot.edit_message_text(full_str,sent_msg.chat.id,sent_msg.message_id)
-        gpa_calculator(message,credit,splitted_upper)
- 
+        if check_invalid_grade == False:
+            sent_msgI = "An invalid grade is found from the grades you entered. Please enter them again"
+            bot.edit_message_text(sent_msgI,sent_msg.chat.id,sent_msg.message_id)
+            bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
+        elif len(splitted_grades) != len(course_title):
+            sent_msgN = "The grades you entered must be equal to the courses in the given semester. Please enter them again"
+            bot.edit_message_text(sent_msgN,sent_msg.chat.id,sent_msg.message_id)
+            bot.register_next_step_handler(sent_msg,grade_validator,course_title,credit)
+        else:
+            splitted_upper = []
+            for i in range(len(splitted_grades)):
+                splitted_upper.append(splitted_grades[i].upper())
+
+            course_grade = {}
+            for i in range(len(course_title)):
+                temp_data = {course_title[i]: splitted_upper[i]}
+                course_grade.update(temp_data)
+
+            full_str = "\n".join("{0}  {1}".format(v, k)
+                                for k, v in course_grade.items())
+            bot.edit_message_text(full_str,sent_msg.chat.id,sent_msg.message_id)
+            gpa_calculator(message,credit,splitted_upper)
+    

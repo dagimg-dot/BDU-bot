@@ -2,6 +2,7 @@ from bot import bot
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from util.interrupter import step_canceler
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
 from util.useful_lists import cardinal_ordinal,OpenWeb,success_login
@@ -39,19 +40,25 @@ def current_cgpa(message):
 
 
 def sgpa_year_handler(message,msg):
-    year = message.text
-    cleaner(message)
-    sent_msgS = "Enter semester"
-    bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
-    bot.register_next_step_handler(msg, sgpa_semester_handler, year,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        year = message.text
+        cleaner(message)
+        sent_msgS = "Enter semester"
+        bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
+        bot.register_next_step_handler(msg, sgpa_semester_handler, year,msg)
 
 
 def sgpa_semester_handler(message, year,msg):
-    semester = message.text
-    cleaner(message)
-    sent_msgC = "Checking availability . . ."
-    bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
-    sgpa_validator(message, year, semester,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        semester = message.text
+        cleaner(message)
+        sent_msgC = "Checking availability . . ."
+        bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
+        sgpa_validator(message, year, semester,msg)
     
 
 def sgpa_validator(message, year, semester,msg):
@@ -104,25 +111,32 @@ def sgpa_validator(message, year, semester,msg):
         cleaner(msg)
 
 def sgrade_year_handler(message,msg):
-    year = message.text
-    cleaner(message)
-    sent_msgS = "Enter semester"
-    bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
-    bot.register_next_step_handler(msg, sgrade_semester_handler, year,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        year = message.text
+        cleaner(message)
+        sent_msgS = "Enter semester"
+        bot.edit_message_text(sent_msgS,msg.chat.id,msg.message_id)
+        bot.register_next_step_handler(msg, sgrade_semester_handler, year,msg)
 
 
 def sgrade_semester_handler(message, year,msg):
-    semester = message.text
-    cleaner(message)
-    sent_msgC = "Checking availability . . ."
-    bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
-    sgrade_validator(message, year, semester,msg)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        semester = message.text
+        cleaner(message)
+        sent_msgC = "Checking availability . . ."
+        bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
+        sgrade_validator(message, year, semester,msg)
 
 
 def sgrade_validator(message, year, semester,msg):
     # try:
         users[message.from_user.id].driver.find_element(
             By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
+
         year_status = users[message.from_user.id].driver.find_elements(
         By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
         sem_status = users[message.from_user.id].driver.find_elements(
@@ -157,19 +171,28 @@ def sgrade_validator(message, year, semester,msg):
                         toggle = 2*i-1
                         users[message.from_user.id].driver.find_element(By.CSS_SELECTOR, "tr:nth-child("+str(
                             toggle)+") > td.ob_gDGE.ob_gC.ob_gC_Fc > div > div.ob_gDGEB > img").click()
-                        time.sleep(3)
+                        time.sleep(10)
                         # users[message.from_user.id].driver.implicitly_wait(10)
                         # wait = WebDriverWait(users[message.from_user.id].driver, 5)
+                        # WebDriverWait(users[message.from_user.id].driver, 25).until(EC.presence_of_element_located((By.XPATH, "//*[@id='dnn_ctr397_ViewMyStatus_reportviewer11_grid2_ob_grid2BodyContainer_grid3_4_ob_grid3_4HeaderContainer' and contains(text(),'Title')]")))
 
+                        # title_old = users[message.from_user.id].driver.find_elements(
+                        #     By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
                         title = users[message.from_user.id].driver.find_elements(
                             By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
                         grade = users[message.from_user.id].driver.find_elements(
                             By.XPATH, "//div/table/tbody/tr/td[6]/div[1]")
-                        # title = wait.until(EC.visibility_of_element_located((By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")))
+                        # title = wait.until(EC.visibility_of_element_located((By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]"),'Title'))
                         # grade = wait.until(EC.visibility_of_element_located((By.XPATH, "//div/table/tbody/tr/td[6]/div[1]")))
-                        
                         # print(title)
                         len_title = len(title)
+                        # sleep_time = 0
+                        # while len_title <= 4:
+                        #     sleep_time += 1
+                        #     time.sleep(sleep_time)
+
+
+                        
                         for i in range(len(title)):
                             if title[i].text == "Title":
                                 j = i
@@ -183,7 +206,7 @@ def sgrade_validator(message, year, semester,msg):
 
                         for i in range(j+1, len_title):
                             grades.append(grade[i].text)
-                            if grades[i] == "":
+                            if grades[i] == None:
                                 grades[i] = "NA"
                             temp_data = {title[i].text: grades[i]}
                             grade_list.update(temp_data)

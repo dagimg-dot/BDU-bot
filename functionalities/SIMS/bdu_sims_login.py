@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
+from util.interrupter import step_canceler
 from util.user_database import users,User
 
 
@@ -30,19 +31,25 @@ def login(message):
 
 
 def username_handler(message,sent_msgW):
-    username = message.text
-    cleaner(message)
-    sent_msgP = "Now, Enter your password"
-    bot.edit_message_text(sent_msgP,sent_msgW.chat.id,sent_msgW.message_id)
-    bot.register_next_step_handler(sent_msgW,password_handler, username,sent_msgW)
+    if message.text == '/x':
+        step_canceler(message)
+    else: 
+        username = message.text
+        cleaner(message)
+        sent_msgP = "Now, Enter your password"
+        bot.edit_message_text(sent_msgP,sent_msgW.chat.id,sent_msgW.message_id)
+        bot.register_next_step_handler(sent_msgW,password_handler, username,sent_msgW)
 
 
 def password_handler(message,username,sent_msgW):
-    password = message.text
-    cleaner(message)
-    auth =  "Authenticating . . ."
-    bot.edit_message_text(auth,sent_msgW.chat.id,sent_msgW.message_id)
-    login_validator(message,username,password,sent_msgW)
+    if message.text == '/x':
+        step_canceler(message)
+    else:
+        password = message.text
+        cleaner(message)
+        auth =  "Authenticating . . ."
+        bot.edit_message_text(auth,sent_msgW.chat.id,sent_msgW.message_id)
+        login_validator(message,username,password,sent_msgW)
 
 def login_validator(message, usr, passd,sent_msgW):
     
