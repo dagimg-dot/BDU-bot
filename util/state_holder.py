@@ -1,4 +1,3 @@
-# from util.useful_lists import OpenWeb
 from util.user_database import users
 
 def state_changer(message,page):
