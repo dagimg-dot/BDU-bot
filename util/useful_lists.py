@@ -6,15 +6,8 @@ MyC = ["All Courses", "Courses given on a specific year",
        "Courses given on a specific semester"]
 MyS = ["Cumulative GPA - CGPA", "Semester GPA - SGPA", "Semester Grades"]
 
-Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu","x"]
+Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
 
-
-OpenWeb = {
-    "My Courses": 0,
-    "My Status": 0,
-    "My Grades": 0,
-    "Semester Grades": 0
-}
 
 Grades = ['A+','a+','A','a','A-','a-','B+','b+','B','b','B-','b-','C+','c+','C','c','C-','c-','D','d','F','f']
 
