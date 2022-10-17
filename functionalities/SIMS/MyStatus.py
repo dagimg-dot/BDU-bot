@@ -100,9 +100,7 @@ def sgpa_validator(message, year, semester,msg):
                 if year_status[i].text == year:
                     if sem_status[i].text == semester:
                         sem_gpa = sgpa[i].text
-            full_str = "Your GPA in " + \
-                cardinal_ordinal[int(
-                    year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
+            full_str = "Your GPA in " + cardinal_ordinal[int(year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
             bot.send_message(message.chat.id, full_str,reply_markup=buttons("my_status"))
             cleaner(msg)
     except Exception:
