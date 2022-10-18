@@ -13,6 +13,7 @@ def login(message):
     sent_msgW = bot.send_message(message.chat.id, "Please wait . . . ")
     if users[message.from_user.id].is_driver_opened == False:
         users[message.from_user.id].get_webdriver()
+        print(users[message.from_user.id].first_name +" Webdriver Opened !!")
         try:
             users[message.from_user.id].driver.get(url)
         except Exception:
@@ -33,6 +34,8 @@ def login(message):
 def username_handler(message,sent_msgW):
     if message.text == '/x':
         step_canceler(message)
+        users[message.from_user.id].driver.close()
+        print(users[message.from_user.id].first_name +" Webdriver Closed !!")
     else: 
         username = message.text
         cleaner(message)
@@ -44,6 +47,8 @@ def username_handler(message,sent_msgW):
 def password_handler(message,username,sent_msgW):
     if message.text == '/x':
         step_canceler(message)
+        users[message.from_user.id].driver.close()
+        print(users[message.from_user.id].first_name +" Webdriver Closed !!")
     else:
         password = message.text
         cleaner(message)
