@@ -5,13 +5,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from util.interrupter import step_canceler
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
-from util.useful_lists import cardinal_ordinal,OpenWeb,success_login
+from util.useful_lists import cardinal_ordinal,success_login
 from util.user_database import users
 import time
 
 
 def current_cgpa(message):
     try:
+        msg = bot.send_message(message.from_user.id,"Checking availability . . .")
         if users[message.from_user.id].get_state()[success_login[1]] == 1:
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
@@ -31,10 +32,11 @@ def current_cgpa(message):
                 c_gpa = cgpa[i].text
 
         if c_gpa == "":
-            bot.send_message(message.chat.id, "Your current CGPA is not known")
+            sent_msgE = "Your current CGPA is not known"
+            bot.edit_message_text(sent_msgE,msg.chat.id,msg.message_id)
         else:
-            msg = "Your current CGPA is "+c_gpa
-            bot.send_message(message.chat.id, msg)
+            sent_msgC = "Your current CGPA is "+c_gpa
+            bot.edit_message_text(sent_msgC,msg.chat.id,msg.message_id)
     except Exception:
         bot.send_message(message.chat.id,"The database is being updated, please try again later")
 
