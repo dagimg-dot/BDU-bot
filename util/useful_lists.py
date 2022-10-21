@@ -6,7 +6,7 @@ MyC = ["All Courses", "Courses given on a specific year",
        "Courses given on a specific semester"]
 MyS = ["Cumulative GPA - CGPA", "Semester GPA - SGPA", "Semester Grades"]
 
-Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu"]
+Buttons = menu + success_login + MyC + MyS + ["Back", "Back to Menu (Log Out)"]
 
 
 Grades = ['A+','a+','A','a','A-','a-','B+','b+','B','b','B-','b-','C+','c+','C','c','C-','c-','D','d','F','f']
