@@ -171,28 +171,13 @@ def sgrade_validator(message, year, semester,msg):
                         toggle = 2*i-1
                         users[message.from_user.id].driver.find_element(By.CSS_SELECTOR, "tr:nth-child("+str(
                             toggle)+") > td.ob_gDGE.ob_gC.ob_gC_Fc > div > div.ob_gDGEB > img").click()
-                        time.sleep(10)
-                        # users[message.from_user.id].driver.implicitly_wait(10)
-                        # wait = WebDriverWait(users[message.from_user.id].driver, 5)
-                        # WebDriverWait(users[message.from_user.id].driver, 25).until(EC.presence_of_element_located((By.XPATH, "//*[@id='dnn_ctr397_ViewMyStatus_reportviewer11_grid2_ob_grid2BodyContainer_grid3_4_ob_grid3_4HeaderContainer' and contains(text(),'Title')]")))
-
-                        # title_old = users[message.from_user.id].driver.find_elements(
-                        #     By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
+                        time.sleep(5)
                         title = users[message.from_user.id].driver.find_elements(
                             By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]")
                         grade = users[message.from_user.id].driver.find_elements(
                             By.XPATH, "//div/table/tbody/tr/td[6]/div[1]")
-                        # title = wait.until(EC.visibility_of_element_located((By.XPATH, "//div/table/tbody/tr/td[4]/div/div[1]"),'Title'))
-                        # grade = wait.until(EC.visibility_of_element_located((By.XPATH, "//div/table/tbody/tr/td[6]/div[1]")))
-                        # print(title)
                         len_title = len(title)
-                        # sleep_time = 0
-                        # while len_title <= 4:
-                        #     sleep_time += 1
-                        #     time.sleep(sleep_time)
 
-
-                        
                         for i in range(len(title)):
                             if title[i].text == "Title":
                                 j = i
@@ -202,16 +187,14 @@ def sgrade_validator(message, year, semester,msg):
                             if title[i].text in years:
                                 len_title -= 1
 
-                        grades = []
-
                         for i in range(j+1, len_title):
-                            grades.append(grade[i].text)
-                            if grades[i] == None:
-                                grades[i] = "NA"
-                            temp_data = {title[i].text: grades[i]}
+                            if grade[i].text == '':
+                                temp_data = {title[i].text: 'NA'}
+                            else:
+                                temp_data = {title[i].text: grade[i].text}
                             grade_list.update(temp_data)
-                        
-            intro = cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester"
+                            
+            intro = "These are your grades in " + cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester"
             full_str = "\n".join("{0}  {1}".format(v, k)
                                     for k, v in grade_list.items())
             full = intro +"\n\n" + full_str

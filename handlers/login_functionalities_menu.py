@@ -48,10 +48,10 @@ def functionalities_menu_messages(message):
             state_changer(message,success_login[1])
             bot.register_next_step_handler(msg, sgpa_year_handler,msg)
         elif message.text == MyS[2]: # Semester Grades
-            # msg = bot.send_message(message.from_user.id, "Enter year")
-            bot.send_message(message.from_user.id, "Under Development")
-            # state_changer(message,MyS[2])
-            # bot.register_next_step_handler(msg, sgrade_year_handler,msg)
+            msg = bot.send_message(message.from_user.id, "Enter year")
+            # bot.send_message(message.from_user.id, "Under Development")
+            state_changer(message,MyS[2])
+            bot.register_next_step_handler(msg, sgrade_year_handler,msg)
         elif message.text == "Back":
             bot.send_message(message.from_user.id, "Back",reply_markup=buttons("s_login"))
             cleaner(message)
