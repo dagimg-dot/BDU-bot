@@ -131,7 +131,7 @@ def sgrade_semester_handler(message, year,msg):
 
 
 def sgrade_validator(message, year, semester,msg):
-    # try:
+    try:
         users[message.from_user.id].driver.find_element(
             By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
 
@@ -200,7 +200,7 @@ def sgrade_validator(message, year, semester,msg):
             cleaner(msg)
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
-    # except Exception:
-    #     sent_msg_error = "The database is being updated, please try agian later"
-    #     bot.send_message(message.chat.id, sent_msg_error,reply_markup=buttons("my_status"))
-    #     cleaner(msg)
+    except Exception:
+        sent_msg_error = "The database is being updated, please try agian later"
+        bot.send_message(message.chat.id, sent_msg_error,reply_markup=buttons("my_status"))
+        cleaner(msg)
