@@ -1,7 +1,5 @@
 from bot import bot
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from util.interrupter import step_canceler
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
