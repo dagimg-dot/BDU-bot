@@ -191,16 +191,19 @@ def sgrade_validator(message, year, semester,msg):
                             else:
                                 temp_data = {title[i].text: grade[i].text}
                             grade_list.update(temp_data)
-                            
-            intro = "These are your grades in " + cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester"
-            full_str = "\n".join("{0}  {1}".format(v, k)
-                                    for k, v in grade_list.items())
-            full = intro +"\n\n" + full_str
-            bot.send_message(message.chat.id, full,reply_markup=buttons("my_status"))
-            cleaner(msg)
+            if len(grade_list) != 0:
+                intro = "These are your grades in " + cardinal_ordinal[int(year)]+" year " + cardinal_ordinal[int(semester)] + " semester"
+                full_str = "\n".join("{0}  {1}".format(v, k)
+                                        for k, v in grade_list.items())
+                full = intro +"\n\n" + full_str
+                bot.send_message(message.chat.id, full,reply_markup=buttons("my_status"))
+                cleaner(msg)
+            else:
+                bot.send_message(message.chat.id, "The database is being updated, please try agian later",reply_markup=buttons("my_status"))
+                cleaner(msg)
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
     except Exception:
-        sent_msg_error = "The database is being updated, please try agian later"
+        sent_msg_error = "Request to the server timed out. Please try again later"
         bot.send_message(message.chat.id, sent_msg_error,reply_markup=buttons("my_status"))
         cleaner(msg)
