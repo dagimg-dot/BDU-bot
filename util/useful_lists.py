@@ -1,6 +1,6 @@
 import json
 
-menu = ["Login", "Predict GPA"]
+menu = ["Login", "Predict GPA","Reverse Prediction"]
 success_login = ["My Courses", "My Status", "My Grades", "My Dormitory"]
 MyC = ["All Courses", "Courses given on a specific year",
        "Courses given on a specific semester"]
@@ -35,6 +35,19 @@ grade_list = {
     "D": 1,
     "F": 0
 }
+rev_grade_list = {
+    "A": 4,
+    "A-": 3.75,
+    "B+": 3.5,
+    "B": 3,
+    "B-": 2.75,
+    "C+": 2.5,
+    "C": 2,
+    "C-": 1.75,
+    "D": 1,
+    "F": 0
+}
+
 
 with open('util\Dept\dept_list.json') as f:
     data = json.load(f)
@@ -43,3 +56,6 @@ dept_title =  []
 for i in range(len(data)):
     dept_title.append(data[i]['Department Title'])
 
+dept_state_holder = []
+for i in range(len(dept_title)):
+    dept_state_holder.append(0)
