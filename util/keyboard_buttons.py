@@ -5,8 +5,10 @@ from util.useful_lists import *
 def buttons(type="Menu"):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True,input_field_placeholder="BDU SIMS")
     if type == "Menu":
-        row = [types.KeyboardButton(x) for x in menu]
+        row = [types.KeyboardButton(x) for x in menu[:2]]
+        row_r = types.KeyboardButton(menu[2]) 
         markup.add(*row)
+        markup.add(row_r)
     elif type == "s_login":
         row = [types.KeyboardButton(x) for x in success_login]
         markup.add(*row)
