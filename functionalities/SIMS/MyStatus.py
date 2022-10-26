@@ -11,7 +11,7 @@ import time
 def current_cgpa(message):
     try:
         msg = bot.send_message(message.from_user.id,"Checking availability . . .")
-        if users[message.from_user.id].get_state()[success_login[1]] == 1:
+        if users[message.from_user.id].get_user_state()[success_login[1]] == 1:
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
 
@@ -63,7 +63,7 @@ def sgpa_semester_handler(message, year,msg):
 
 def sgpa_validator(message, year, semester,msg):
     try:
-        if users[message.from_user.id].get_state()[success_login[1]]:
+        if users[message.from_user.id].get_user_state()[success_login[1]]:
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt64").click()
 
