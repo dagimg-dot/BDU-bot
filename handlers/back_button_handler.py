@@ -20,7 +20,7 @@ def still_loggedin_checker(message):
 def user_answer_logout(query):
     if query.data == "Yes":
         users[query.from_user.id].driver.close()
-        print(users[back.from_user.id].first_name +" Webdriver Closed !!")
+        print(users[query.from_user.id].first_name +" Webdriver Closed !!")
         msg = "You are logged out !!"
         users[query.from_user.id].is_logged_in = False
         users[query.from_user.id].is_driver_opened = False
