@@ -8,11 +8,11 @@ from util.user_database import users
 
 def All_Courses(message,sent_msg):
     try:
-        if users[message.from_user.id].get_state()[success_login[0]] == 1:
+        if users[message.from_user.id].get_user_state()[success_login[0]] == 1:
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
 
-        users[message.from_user.id].set_state(success_login[0],False)
+        # users[message.from_user.id].set_user_state(success_login[0],0)
 
         courseTitle = users[message.from_user.id].driver.find_elements(
             By.XPATH, "//div/table/tbody/tr/td[3]/div/div[1]")
@@ -68,7 +68,7 @@ def course_semester_handler(message, year, choice,msg):
 
 def course_validator(message, year, semester, choice,msg):
     try:
-        if users[message.from_user.id].get_state()[success_login[0]] == 1:
+        if users[message.from_user.id].get_user_state()[success_login[0]] == 1:
             users[message.from_user.id].driver.find_element(
                 By.ID, "dnn_dnnTREEVIEW_ctldnnTREEVIEWt62").click()
 
