@@ -25,7 +25,7 @@ def get_add_info(message,msg):
             course_title.append(pre_data[i]['Course Title'])
             credit.append(pre_data[i]['Credit'])
 
-        intro = "These are the courses for Pre - Engineering \n\n"
+        intro = "These are the courses for Pre - Engineering"
         if users[message.from_user.id].get_user_state()[menu[1]] >= 1:
             full_str = '\n'.join([str(i) for i in course_title])
             full = intro +"\n\n" + full_str
@@ -37,7 +37,6 @@ def get_add_info(message,msg):
             full_msg = course_display(course_title,credit)
             full = intro +"\n\n" + full_msg
             sent_msg = bot.send_message(message.from_user.id,full)
-            # bot.edit_message_text(full,sent_msg.from_user.id,sent_msg.message_id)
             ask_gpa = "Please enter the the range of GPAs to reverse predict individual grades (e.g: 3.5,3.7)"
             sent_msgR = bot.send_message(message.from_user.id,ask_gpa)
             bot.register_next_step_handler(sent_msgR,GPA_validator,course_title,credit,sent_msgR)
@@ -63,7 +62,6 @@ def semester_handler(message,year,sent_msg,msg):
         cleaner(message)
         sent_msgC = "Validating . . ."
         bot.edit_message_text(sent_msgC,sent_msg.chat.id,sent_msg.message_id)
-        # cleaner(sent_msg)
         year_sem_validator(message,year,semester,sent_msg,msg)
 
 def year_sem_validator(message,year,semester,sent_msg,msg):
@@ -173,8 +171,7 @@ def grade_validator(message,course_title,credit):
     else:
         sent_msgC = "Validating . . ."
         sent_msg = bot.send_message(message.from_user.id,sent_msgC)
-        predicted_grades= message.text
-        # cleaner(message)
+        predicted_grades = message.text
         splitted_grades_uf = re.split(r'[,\s]',predicted_grades)
         splitted_grades = list(filter(None,splitted_grades_uf))
 
