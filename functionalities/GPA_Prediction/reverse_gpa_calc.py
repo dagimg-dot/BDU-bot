@@ -8,13 +8,13 @@ from util.user_database import users
 
 
 def random_grade_generator(course_title):
+    # grade = random.choice(list(it.combinations_with_replacement(list(rev_grade_list.keys()), len(course_title))))
+    # return grade
     rand_grade_list = []
     for i in range(len(course_title)):
         grade = random.choice(list(rev_grade_list.keys()))
-    # grade = random.choice(list(it.combinations_with_replacement(list(rev_grade_list.keys()), len(course_title))))
         rand_grade_list.append(grade)
     return rand_grade_list
-    # return grade
 
 def rev_gpa_calc(message,course_title,credit,sorted_u_gpa):
     global count, count2
