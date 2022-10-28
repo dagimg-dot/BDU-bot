@@ -11,6 +11,10 @@ collection = db["Users"]
 users = {}
 
 
+# Get the users data from the database to solve the issue where a user should always press start 
+# to be added to the online database everytime the program restarts.  
+
+
 class User:
     def __init__(self, user_id, first_name):
         self.user_id = user_id
@@ -25,13 +29,11 @@ class User:
             menu[1]: 0,
             menu[2]: 0
         }
-        self.dept_state = dept_state_holder
-        # self.dept_state = [0,0,0,0,0]
         self.rev_state = [1,0,0,0,0]
         self.possibility_dict = {}
         self.gpa_list = []
         self.current_state = 0
-        self.rev_message_id = 0
+        self.message_id = [0,0,0]
 
     def get_webdriver(self):
         self.driver = initiate_driver()
