@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from util.keyboard_buttons import buttons
 from util.message_cleaner import cleaner
 from util.interrupter import step_canceler
-from util.user_database import users,User
+from util.user_database import users
 
 
 def login(message):
