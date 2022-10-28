@@ -50,7 +50,6 @@ def collector(message,rand_gr,course_title,gpa,count):
     users[message.from_user.id].possibility_dict[count] = {}
     for j in range(len(course_title)):
         temp_data = {course_title[j]: rand_gr[j]}
-        print
         users[message.from_user.id].possibility_dict[count].update(temp_data)
 
     if len(users[message.from_user.id].possibility_dict) == 5:
