@@ -20,6 +20,7 @@ def login(message):
             sent_msgE = "Connection to the server timed out, plesase try again later"
             bot.edit_message_text(sent_msgE,sent_msgW.chat.id,sent_msgW.message_id)
             users[message.from_user.id].driver.close()
+            print(users[message.from_user.id].first_name +" Webdriver Closed !!")
     try:
         users[message.from_user.id].driver.find_element(
             By.ID, "dnn_ctr_Login_Login_DNN_txtUsername").clear()
@@ -27,8 +28,10 @@ def login(message):
         bot.edit_message_text(sent_msgU,sent_msgW.chat.id,sent_msgW.message_id)
         bot.register_next_step_handler(sent_msgW, username_handler,sent_msgW)
     except NoSuchElementException:
-        bot.send_message(message.chat.id,"The website is under maintenance, please check back later")
+        sent_msgNS = "The website is under maintenance, please check back later"
+        bot.edit_message_text(sent_msgNS,sent_msgW.chat.id,sent_msgW.message_id)
         users[message.from_user.id].driver.close()
+        print(users[message.from_user.id].first_name +" Webdriver Closed !!")
 
 
 def username_handler(message,sent_msgW):
