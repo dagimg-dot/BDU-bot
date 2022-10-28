@@ -33,7 +33,7 @@ class User:
         self.possibility_dict = {}
         self.gpa_list = []
         self.current_state = 0
-        self.message_id = [0,0,0]
+        self.message_id = [0,0,0,0]
 
     def get_webdriver(self):
         self.driver = initiate_driver()
@@ -46,9 +46,6 @@ class User:
 
     def get_rev_state(self,index):
         return self.rev_state[index]
-    
-    def get_rev_state_full(self):
-        return self.rev_state
 
     def set_rev_state(self,index,state):
         self.rev_state[index] = state
