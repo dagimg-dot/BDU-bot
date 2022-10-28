@@ -3,6 +3,7 @@ from bot import bot
 from functionalities.GPA_Prediction.reverse_gpa_calc import rev_gpa_calc
 from util.interrupter import step_canceler
 from util.message_cleaner import cleaner
+from util.user_database import users
 
 def course_display(course_title,credit):
     course_list = {}
@@ -38,7 +39,7 @@ def GPA_validator(message,course_title,credit,sent_msgR):
                     split_float.append(float(split_filter[i]))
         
                     if split_float[i] <= 0 or split_float[i] > 4:
-                        sent_msgD = "The GPAs you entered should be 0 - 4, please enter GPAs again"
+                        sent_msgD = "The GPAs you entered should be between 0 and 4, please enter GPAs again"
                         bot.edit_message_text(sent_msgD,sent_msgR.chat.id,sent_msgR.message_id)
                         bot.register_next_step_handler(sent_msgR,GPA_validator,course_title,credit,sent_msgR)
                     else:
