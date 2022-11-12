@@ -1,0 +1,410 @@
+[
+    {
+        "Course Code": "Psyc1011",
+        "Course Title": "General Psychology",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1011",
+        "Course Title": "Mathematics for Natural Sciences",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GeES1011",
+        "Course Title": "Geography of Ethiopia and the Horn",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Phys1011",
+        "Course Title": "General Physics",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LoCT1011",
+        "Course Title": "Critical Thinking",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "SpSc1011",
+        "Course Title": "Physical Fitness",
+        "Credit": 0,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1011",
+        "Course Title": "Communicative English Language Skills I",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math1041",
+        "Course Title": "Applied Mathematics I",
+        "Credit": 6,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "EmTe1012",
+        "Course Title": "Introduction to Emerging Technologies",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "GlTr1012",
+        "Course Title": "Global Trends",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Anth1012",
+        "Course Title": "Social Anthropology",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "FLEn1012",
+        "Course Title": "Communicative English Language Skills II",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "ECEg1052",
+        "Course Title": "Computer Programming",
+        "Credit": 5,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MCiE1012",
+        "Course Title": "Moral and Civic Education",
+        "Credit": 4,
+        "Year": 1,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Math2041",
+        "Course Title": "Applied Mathematics II",
+        "Credit": 6,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Meng2021",
+        "Course Title": "Workshop Practice",
+        "Credit": 2,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "Meng2023",
+        "Course Title": "Engineering Drawing",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "CEng2051",
+        "Course Title": "Engineering Mechanics-I (Statics)",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Meng2061",
+        "Course Title": "Strength of Materials",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LpEg2081",
+        "Course Title": "Introduction to Leather Product Industry",
+        "Credit": 3,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Math2043",
+        "Course Title": "Introduction to Statistics for Engineers",
+        "Credit": 3,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "Econ1011",
+        "Course Title": "Economics",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "MEng2052",
+        "Course Title": "Engineering Mechanics II (Dynamics)",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LpEg2104",
+        "Course Title": "Creative Design",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "MEng2062",
+        "Course Title": "Machine Drawing",
+        "Credit": 5,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LpEg2162",
+        "Course Title": "Maintenance of Leather Product Machine",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg2102",
+        "Course Title": "Fundamental of Fashion Design",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg2092",
+        "Course Title": "Basic Leather Processing I",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Math2042",
+        "Course Title": "Numerical Method",
+        "Credit": 4,
+        "Year": 2,
+        "Semester": 2,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "LpEg3121",
+        "Course Title": "Leather Cutting Technology",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3131",
+        "Course Title": "Sewing Technology",
+        "Credit": 4,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3091",
+        "Course Title": "Basic Leather Processing II",
+        "Credit": 4,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3113",
+        "Course Title": "Footwear Pattern Making",
+        "Credit": 6,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3115",
+        "Course Title": "Leather Goods Pattern Making",
+        "Credit": 6,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3031",
+        "Course Title": "Research Methodology",
+        "Credit": 4,
+        "Year": 3,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    },
+    {
+        "Course Code": "Eeng3072",
+        "Course Title": "Basics of Electronics and Instrumentation",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Supporting Course"
+    },
+    {
+        "Course Code": "LpEg3132",
+        "Course Title": "Footwear Closing Technology",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3134",
+        "Course Title": "Leather Goods Construction",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3112",
+        "Course Title": "Leather Garment Pattern Making",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3142",
+        "Course Title": "Bottom Component Technology",
+        "Credit": 3,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3114",
+        "Course Title": "CAD in Leather Product Design",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg3162",
+        "Course Title": "Plant Layout and Facility Design",
+        "Credit": 5,
+        "Year": 3,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4131",
+        "Course Title": "Leather Garment Construction",
+        "Credit": 6,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4141",
+        "Course Title": "Lasting and Finishing Technology",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4181",
+        "Course Title": "Statistical Application in Leather Product Industry",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4171",
+        "Course Title": "Quality Management in Leather Product Industry",
+        "Credit": 5,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4191",
+        "Course Title": "Production Management in Leather Industry",
+        "Credit": 4,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Incl1012",
+        "Course Title": "Inclusive",
+        "Credit": 4,
+        "Year": 4,
+        "Semester": 1,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4151",
+        "Course Title": "Holistic Examination",
+        "Credit": 2,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "LpEg4154",
+        "Course Title": "Industrial Internship",
+        "Credit": 30,
+        "Year": 4,
+        "Semester": 2,
+        "Course Type": "Major Course"
+    },
+    {
+        "Course Code": "Hist. 102",
+        "Course Title": "HISTORY OF ETHIOPIA AND THE HORN",
+        "Credit": 5,
+        "Year": 5,
+        "Semester": 1,
+        "Course Type": "Common Course"
+    }
+]
