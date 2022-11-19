@@ -59,7 +59,7 @@ rev_grade_list = {
 }
 
 
-with open('util\Dept\dept_list.json') as f:
+with open('./util/Dept/dept_list.json') as f:
     data = json.load(f)
 
 dept_title =  []
