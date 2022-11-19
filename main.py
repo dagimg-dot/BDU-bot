@@ -1,5 +1,6 @@
 from handlers.commands_user import start_message,help_message,menu_handler
 from handlers.main_menu import main_menu_messages
+from util.user_fetch import fetchUsers
 from bot import bot
 
 
@@ -19,6 +20,7 @@ command_handlers()
 
 message_handlers()
 
+fetchUsers()
 
 def run():
     bot.infinity_polling()
