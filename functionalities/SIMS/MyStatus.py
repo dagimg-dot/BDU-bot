@@ -30,7 +30,10 @@ def current_cgpa(message):
                 c_gpa = cgpa[i].text
 
         if c_gpa == "":
-            sent_msgE = "Your current CGPA is not known"
+            for i in range(len(year_status)):
+                if year_status[i].text == year_max:
+                    c_gpa_last = cgpa[i-1].text
+            sent_msgE = "Your current CGPA is not known, but your recent CGPA is " + c_gpa_last
             bot.edit_message_text(sent_msgE,msg.chat.id,msg.message_id)
         else:
             sent_msgC = "Your current CGPA is "+c_gpa
@@ -100,9 +103,15 @@ def sgpa_validator(message, year, semester,msg):
                 if year_status[i].text == year:
                     if sem_status[i].text == semester:
                         sem_gpa = sgpa[i].text
-            full_str = "Your GPA in " + cardinal_ordinal[int(year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is "+sem_gpa
-            bot.send_message(message.chat.id, full_str,reply_markup=buttons("my_status"))
-            cleaner(msg)
+
+            if sem_gpa == "":
+                full_str = "Your GPA in " + cardinal_ordinal[int(year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is not known"
+                bot.send_message(message.chat.id, full_str,reply_markup=buttons("my_status"))
+                cleaner(msg)
+            else:
+                full_str = "Your GPA in " + cardinal_ordinal[int(year)]+" year "+cardinal_ordinal[int(semester)]+" semester" + " is " + sem_gpa
+                bot.send_message(message.chat.id, full_str,reply_markup=buttons("my_status"))
+                cleaner(msg)
     except Exception:
         sent_msg_error = "The database is being updated, please try agian later"
         bot.send_message(message.chat.id, sent_msg_error,reply_markup=buttons("my_status"))
