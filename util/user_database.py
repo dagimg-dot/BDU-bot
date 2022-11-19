@@ -1,9 +1,11 @@
 from pymongo import MongoClient
-from config import db
+from config import DB_URL
 from util.initiate_webdriver import initiate_driver
-from util.useful_lists import success_login,menu,MyS,dept_state_holder
+from util.useful_lists import success_login,menu,MyS
 
-cluster = MongoClient(db)
+print(DB_URL)
+print(DB_URL)
+cluster = MongoClient(DB_URL)
 
 db = cluster["Telegram"]
 collection = db["Users"]

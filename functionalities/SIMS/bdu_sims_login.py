@@ -1,5 +1,5 @@
 import time
-from config import url
+from config import SITE_URL
 from bot import bot
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
@@ -15,7 +15,7 @@ def login(message):
         users[message.from_user.id].get_webdriver()
         print(users[message.from_user.id].first_name +" Webdriver Opened !!")
         try:
-            users[message.from_user.id].driver.get(url)
+            users[message.from_user.id].driver.get(SITE_URL)
         except Exception:
             sent_msgE = "Connection to the server timed out, plesase try again later"
             bot.edit_message_text(sent_msgE,sent_msgW.chat.id,sent_msgW.message_id)

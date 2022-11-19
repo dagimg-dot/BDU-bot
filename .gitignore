@@ -2,3 +2,4 @@
 Token.txt
 **/__pycache__
 *.exe
+.env
