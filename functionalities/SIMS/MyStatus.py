@@ -33,7 +33,7 @@ def current_cgpa(message):
             for i in range(len(year_status)):
                 if year_status[i].text == year_max:
                     c_gpa_last = cgpa[i-1].text
-            sent_msgE = "Your current CGPA is not known, but your recent CGPA is " + c_gpa_last
+            sent_msgE = "Your current CGPA is not known, but your recent known CGPA is " + c_gpa_last
             bot.edit_message_text(sent_msgE,msg.chat.id,msg.message_id)
         else:
             sent_msgC = "Your current CGPA is "+c_gpa
