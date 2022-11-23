@@ -2,7 +2,6 @@ from bot import bot
 from telebot.types import InlineKeyboardMarkup
 from telebot.types import InlineKeyboardButton
 from util.user_database import users
-from util.useful_lists import cardinal_roman
 
 
 def state_identifier(message):

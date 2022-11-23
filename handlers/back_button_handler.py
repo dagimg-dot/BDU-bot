@@ -1,14 +1,12 @@
 from bot import bot
 from util.keyboard_buttons import buttons
 from telebot import types
-from util.message_cleaner import cleaner
 from util.state_holder import user_state_reset
 from util.user_database import users
 
 
 def still_loggedin_checker(message):
     users[message.from_user.id].message_id[0] = message.message_id
-    back = message
     markup = types.InlineKeyboardMarkup()
     yes_btn = types.InlineKeyboardButton('Yes', callback_data="Yes")
     no_btn = types.InlineKeyboardButton('No', callback_data="No")

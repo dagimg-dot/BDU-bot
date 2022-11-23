@@ -22,16 +22,6 @@ cardinal_ordinal = {
     7: 'seventh',
 }
 
-cardinal_roman = {
-    1: 'I',
-    2: 'II',
-    3: 'III',
-    4: 'IV',
-    5: 'V',
-    6: 'VI',
-    7: 'VII',
-}
-
 grade_list = {
     "A+": 4,
     "A": 4,
@@ -66,6 +56,3 @@ dept_title =  []
 for i in range(len(data)):
     dept_title.append(data[i]['Department Title'])
 
-dept_state_holder = []
-for i in range(len(dept_title)):
-    dept_state_holder.append(0)
