@@ -13,8 +13,9 @@ def main_menu_messages(message: Message, bot: TeleBot):
     if message.text in Buttons:
         if message.text in menu:
             if message.text == menu[0]:
-                # bot.send_message(message.chat.id,"yme",reply_markup=buttons("s_login"))
-                login(message)
+                bot.send_message(message.chat.id,"Under Development")
+                # bot.send_message(message.chat.id,"Under Development",reply_markup=buttons("s_login"))
+                # login(message)
             elif message.text == menu[1]:
                 user_state_changer(message,menu[1])
                 predict_gpa(message)
